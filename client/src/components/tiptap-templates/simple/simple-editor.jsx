@@ -78,7 +78,8 @@ import content from "@//components/tiptap-templates/simple/data/content.json"
 const MainToolbarContent = ({
   onHighlighterClick,
   onLinkClick,
-  isMobile
+  isMobile,
+  onSave
 }) => {
   return (
     <>
@@ -124,6 +125,12 @@ const MainToolbarContent = ({
       <ToolbarGroup>
         <ImageUploadButton text="Add" />
       </ToolbarGroup>
+      <ToolbarSeparator />
+      <ToolbarGroup>
+        <Button onClick={onSave} data-style="primary">
+          Save
+        </Button>
+      </ToolbarGroup>
       <Spacer />
       {isMobile && <ToolbarSeparator />}
       <ToolbarGroup>
@@ -159,7 +166,7 @@ const MobileToolbarContent = ({
   </>
 )
 
-export function SimpleEditor() {
+export function SimpleEditor({ handleSave, editorRef }) {
   const isMobile = useIsMobile()
   const { height } = useWindowSize()
   const [mobileView, setMobileView] = React.useState("main")
@@ -211,6 +218,13 @@ export function SimpleEditor() {
     overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,
   })
 
+  // Expose editor instance to parent component
+  React.useEffect(() => {
+    if (editorRef && editor) {
+      editorRef.current = editor
+    }
+  }, [editor, editorRef])
+
   React.useEffect(() => {
     if (!isMobile && mobileView !== "main") {
       setMobileView("main")
@@ -233,7 +247,8 @@ export function SimpleEditor() {
             <MainToolbarContent
               onHighlighterClick={() => setMobileView("highlighter")}
               onLinkClick={() => setMobileView("link")}
-              isMobile={isMobile} />
+              isMobile={isMobile}
+              onSave={handleSave} />
           ) : (
             <MobileToolbarContent
               type={mobileView === "highlighter" ? "highlighter" : "link"}
