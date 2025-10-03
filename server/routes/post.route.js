@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createPost, updatePost, deletePost, getPostById, getSimilarCategoryPosts } from "../controllers/post.controller.js";
+import { createPost, updatePost, deletePost, getPostBySlug, getSimilarCategoryPosts } from "../controllers/post.controller.js";
 import upload from "../middlewares/multer.js";
 import { isAdmin, protect } from "../middlewares/user.middlware.js";
 
@@ -27,7 +27,7 @@ postRouter.patch(
 );
 
 postRouter.delete('/delete/:id', protect, isAdmin, deletePost);
-postRouter.get('/get-post/:id',getPostById);
+postRouter.get('/get-post/:slug',getPostBySlug);
 postRouter.get('/get-similar-post/:id',getSimilarCategoryPosts);
 
 export default postRouter;

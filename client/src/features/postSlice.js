@@ -51,12 +51,25 @@ export const deletePost = createAsyncThunk(
   }
 );
 
-// Get single post by id
-export const getPostById = createAsyncThunk(
-  "post/getPostById",
-  async (id, { rejectWithValue }) => {
+// Get all posts
+export const getAllPosts = createAsyncThunk(
+  "user/getAllPosts",
+  async (_, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${API_URL}/api/post/get-post/${id}`);
+      const res = await axios.get(`${API_URL}/api/user/get-all-post`);
+      return res.data.posts;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || "Failed to fetch posts");
+    }
+  }
+);
+
+// Get single post by id
+export const getPostBySlug = createAsyncThunk(
+  "post/getPostBySlug",
+  async (slug, { rejectWithValue }) => {
+    try {
+      const res = await axios.get(`${API_URL}/api/post/get-post/${slug}`);
       return res.data.post;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch post");
@@ -79,11 +92,13 @@ export const getSimilarPosts = createAsyncThunk(
 
 const initialState = {
   currentPost: null,
+  allPosts: [],
   similarPosts: [],
   isCreating: false,
   isUpdating: false,
   isDeleting: false,
   isFetching: false,
+  isFetchingAll: false,
   error: null,
 };
 
@@ -93,11 +108,13 @@ const postSlice = createSlice({
   reducers: {
     clearPostState(state) {
       state.currentPost = null;
+      state.allPosts = [];
       state.similarPosts = [];
       state.isCreating = false;
       state.isUpdating = false;
       state.isDeleting = false;
       state.isFetching = false;
+      state.isFetchingAll = false;
       state.error = null;
     },
   },
@@ -145,17 +162,31 @@ const postSlice = createSlice({
         state.error = action.payload;
       })
 
-      // get by id
-      .addCase(getPostById.pending, (state) => {
+      // get by slug
+      .addCase(getPostBySlug.pending, (state) => {
         state.isFetching = true;
         state.error = null;
       })
-      .addCase(getPostById.fulfilled, (state, action) => {
+      .addCase(getPostBySlug.fulfilled, (state, action) => {
         state.isFetching = false;
         state.currentPost = action.payload;
       })
-      .addCase(getPostById.rejected, (state, action) => {
+      .addCase(getPostBySlug.rejected, (state, action) => {
         state.isFetching = false;
+        state.error = action.payload;
+      })
+
+      // get all posts
+      .addCase(getAllPosts.pending, (state) => {
+        state.isFetchingAll = true;
+        state.error = null;
+      })
+      .addCase(getAllPosts.fulfilled, (state, action) => {
+        state.isFetchingAll = false;
+        state.allPosts = action.payload || [];
+      })
+      .addCase(getAllPosts.rejected, (state, action) => {
+        state.isFetchingAll = false;
         state.error = action.payload;
       })
 

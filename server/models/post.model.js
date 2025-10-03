@@ -9,6 +9,12 @@ const postSchema = new Schema({
     ref: "User",
     required: true
   },
+  slug: {
+    type: String,
+    required: true,
+    unique: true,
+    index: true,
+  },
   mainImage: {
     type: String,
     required: true

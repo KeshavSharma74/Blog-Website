@@ -1,6 +1,7 @@
 import Post from "../models/post.model.js";
 import User from "../models/user.model.js";
 import uploadFromBuffer from "../utils/cloudinary.js";
+import slugify from "slugify";
 
 /**
  * CREATE POST
@@ -25,9 +26,18 @@ export const createPost = async (req, res) => {
       return res.status(400).json({ success: false, message: "Main image is required" });
     }
 
+    const baseSlug = slugify(title, { lower: true, strict: true });
+    let slug = baseSlug;
+    // Ensure unique slug by appending a suffix if exists
+    let suffix = 1;
+    while (await Post.findOne({ slug })) {
+      slug = `${baseSlug}-${suffix++}`;
+    }
+
     // Create post document
     const newPost = await Post.create({
       user: userId,
+      slug,
       mainImage: mainImageUrl,
       title,
       subTitle,
@@ -82,6 +92,17 @@ export const updatePost = async (req, res) => {
     if (content) post.content = JSON.parse(content);
     if (contentHTML) post.contentHTML = contentHTML;
 
+    // If title changed, recalculate slug (and ensure uniqueness)
+    if (title) {
+      const baseSlugUpdate = slugify(title, { lower: true, strict: true });
+      let newSlug = baseSlugUpdate;
+      let s = 1;
+      while (await Post.findOne({ slug: newSlug, _id: { $ne: post._id } })) {
+        newSlug = `${baseSlugUpdate}-${s++}`;
+      }
+      post.slug = newSlug;
+    }
+
     await post.save();
 
     return res.status(200).json({ success: true, message: "Post updated successfully", post });
@@ -123,10 +144,10 @@ export const deletePost = async (req, res) => {
   }
 };
 
-export const getPostById = async (req, res) => {
+export const getPostBySlug = async (req, res) => {
   try {
-    const postId = req.params.id;
-    const post = await Post.findById(postId).populate('user', 'name image');
+    const { slug } = req.params;
+    const post = await Post.findOne({ slug }).populate('user', 'name image');
 
     if (!post) {
       return res.status(404).json({ success: false, message: "Post not found" });
@@ -139,11 +160,7 @@ export const getPostById = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Get post by ID error:", error);
-    // Handle cases like an invalid ObjectId format
-    if (error.kind === 'ObjectId') {
-        return res.status(404).json({ success: false, message: "Post not found" });
-    }
+    console.error("Get post by slug error:", error);
     return res.status(500).json({ success: false, message: "Server error" });
   }
 };

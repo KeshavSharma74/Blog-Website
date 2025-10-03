@@ -43,6 +43,7 @@ const Navigation = () => {
           {/* Desktop Nav Links */}
           <div className="hidden lg:flex items-center space-x-8">
             <Link to="/" className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide">Home</Link>
+            <Link to="/blogs" className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide">Blogs</Link>
             {navItems.map(({ label, path }) => (
               <Link
                 key={path}
@@ -57,27 +58,30 @@ const Navigation = () => {
           {/* Desktop Buttons */}
           <div className="hidden lg:flex items-center space-x-4">
             {user ? (
-              <button
-                onClick={async () => {
-                  try {
-                    const action = await dispatch(logout())
-                    if (logout.fulfilled.match(action)) {
-                      const data = action.payload
-                      const success = Boolean(data?.success)
-                      const message = data?.message || (success ? 'Logged out' : 'Logout failed')
-                      success ? toast.success(message) : toast.error(message)
-                    } else {
-                      const message = action.payload || action.error?.message || 'Logout failed'
-                      toast.error(message)
+              <>
+
+                <button
+                  onClick={async () => {
+                    try {
+                      const action = await dispatch(logout())
+                      if (logout.fulfilled.match(action)) {
+                        const data = action.payload
+                        const success = Boolean(data?.success)
+                        const message = data?.message || (success ? 'Logged out' : 'Logout failed')
+                        success ? toast.success(message) : toast.error(message)
+                      } else {
+                        const message = action.payload || action.error?.message || 'Logout failed'
+                        toast.error(message)
+                      }
+                    } catch {
+                      toast.error('Logout failed')
                     }
-                  } catch {
-                    toast.error('Logout failed')
-                  }
-                }}
-                className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
-              >
-                Logout
-              </button>
+                  }}
+                  className="text-gray-300 hover:text-white hover:cursor-pointer transition-colors duration-200 font-light tracking-wide"
+                >
+                  Logout
+                </button>
+              </>
             ) : (
               <Link to="/login" className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide">
                 Login
@@ -119,6 +123,13 @@ const Navigation = () => {
                 >
                   Home
                 </Link>
+                <Link
+                  to="/blogs"
+                  className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                >
+                  Blogs
+                </Link>
                 {navItems.map(({ label, path }) => (
                   <Link
                     key={path}
@@ -131,28 +142,37 @@ const Navigation = () => {
                 ))}
                 <div className="pt-6 w-full flex flex-col items-center space-y-4">
                   {user ? (
-                    <button
-                      onClick={async () => {
-                        try {
-                          const action = await dispatch(logout())
-                          setIsMobileMenuOpen(false)
-                          if (logout.fulfilled.match(action)) {
-                            const data = action.payload
-                            const success = Boolean(data?.success)
-                            const message = data?.message || (success ? 'Logged out' : 'Logout failed')
-                            success ? toast.success(message) : toast.error(message)
-                          } else {
-                            const message = action.payload || action.error?.message || 'Logout failed'
-                            toast.error(message)
+                    <>
+                      <Link
+                        to="/create-blog"
+                        className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                      >
+                        Create Blog
+                      </Link>
+                      <button
+                        onClick={async () => {
+                          try {
+                            const action = await dispatch(logout())
+                            setIsMobileMenuOpen(false)
+                            if (logout.fulfilled.match(action)) {
+                              const data = action.payload
+                              const success = Boolean(data?.success)
+                              const message = data?.message || (success ? 'Logged out' : 'Logout failed')
+                              success ? toast.success(message) : toast.error(message)
+                            } else {
+                              const message = action.payload || action.error?.message || 'Logout failed'
+                              toast.error(message)
+                            }
+                          } catch {
+                            toast.error('Logout failed')
                           }
-                        } catch {
-                          toast.error('Logout failed')
-                        }
-                      }}
-                      className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
-                    >
-                      Logout
-                    </button>
+                        }}
+                        className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
+                      >
+                        Logout
+                      </button>
+                    </>
                   ) : (
                     <Link
                       to="/login"

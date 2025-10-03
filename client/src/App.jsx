@@ -6,6 +6,8 @@ import  { Toaster } from 'react-hot-toast'
 import Login from './components/Login'
 import { useDispatch, useSelector } from 'react-redux'
 import { checkAuth } from '@/features/authSlice'
+import ShowBlogs from './pages/ShowBlogs'
+import ShowSpecificBlog from './pages/ShowSpecificBlog'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -20,12 +22,14 @@ const App = () => {
   }
 
   return (
-    <div className="w-full h-full ">
+    <div className="w-full h-full bg-black ">
       <Toaster></Toaster>
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/create-blog" element={<Blog />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/blog" element={<ShowBlogs />} />
+        <Route path="/blog/:slug" element={<ShowSpecificBlog />} />
       </Routes>
     </div>
   )
