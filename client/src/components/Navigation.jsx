@@ -43,7 +43,7 @@ const Navigation = () => {
           {/* Desktop Nav Links */}
           <div className="hidden lg:flex items-center space-x-8">
             <Link to="/" className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide">Home</Link>
-            <Link to="/blogs" className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide">Blogs</Link>
+            <Link to="/blog" className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide">Blogs</Link>
             {navItems.map(({ label, path }) => (
               <Link
                 key={path}
@@ -143,13 +143,6 @@ const Navigation = () => {
                 <div className="pt-6 w-full flex flex-col items-center space-y-4">
                   {user ? (
                     <>
-                      <Link
-                        to="/create-blog"
-                        className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        Create Blog
-                      </Link>
                       <button
                         onClick={async () => {
                           try {

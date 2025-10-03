@@ -168,7 +168,7 @@ const getAllPosts = async (req, res) => {
 
 const logout = (req, res) => {
   try {
-    res.clearCookie("token", {
+    res.clearCookie("jwt", {
       httpOnly: true,
         httpOnly: true,
         secure: true,

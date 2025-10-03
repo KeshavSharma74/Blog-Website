@@ -14,8 +14,18 @@ export const createPost = createAsyncThunk(
         formData,
         { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
       );
+
+      // ✅ CHECK THE RESPONSE BODY FOR THE SUCCESS FLAG
+      if (!res.data.success) {
+        // If success is false, manually reject with the message from the API
+        return rejectWithValue(res.data.message || "Authorization failed");
+      }
+
+      // If success is true, return the post data
       return res.data.post;
+      
     } catch (err) {
+      // This catch block will now handle actual network/server errors (like 500)
       return rejectWithValue(err.response?.data?.message || "Failed to create post");
     }
   }

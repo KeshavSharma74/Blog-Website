@@ -47,35 +47,46 @@ const ShowSpecificBlog = () => {
           <img
             src={post.mainImage}
             alt={post.title}
-            className="w-full h-72 object-cover rounded-lg"
-            onError={(e) => { e.target.src = 'https://via.placeholder.com/800x400?text=No+Image' }}
+            className="w-full h-72 object-cover rounded-lg shadow-md"
+            onError={(e) => {
+              e.target.src = 'https://via.placeholder.com/800x400?text=No+Image'
+            }}
           />
         </div>
 
         {/* Title and Meta */}
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">{post.title}</h1>
-        <p className="text-gray-600 mb-4">{post.subTitle}</p>
+        <h1 className="text-4xl font-extrabold text-gray-900 mb-2">{post.title}</h1>
+        <p className="text-lg text-gray-600 mb-4">{post.subTitle}</p>
         <div className="flex items-center gap-3 text-sm text-gray-500 mb-8">
           <span>{new Date(post.createdAt).toLocaleDateString()}</span>
           {post.category?.length > 0 && (
             <span className="flex gap-2">
               {post.category.map((c, i) => (
-                <span key={i} className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs">{c}</span>
+                <span
+                  key={i}
+                  className="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-xs"
+                >
+                  {c}
+                </span>
               ))}
             </span>
           )}
         </div>
 
-        {/* Content (HTML) */}
+        {/* Content (HTML) with Tailwind Typography */}
         {post.contentHTML ? (
-          <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: post.contentHTML }} />
+          <div className="prose prose-lg prose-blue max-w-none dark:prose-invert">
+            <div dangerouslySetInnerHTML={{ __html: post.contentHTML }} />
+          </div>
         ) : (
           <pre className="bg-gray-100 p-4 rounded text-sm overflow-auto">
             {JSON.stringify(post.content, null, 2)}
           </pre>
         )}
       </div>
-      <SimilarBlogs></SimilarBlogs>
+
+      {/* Similar Blogs Section */}
+      <SimilarBlogs />
     </div>
   )
 }
