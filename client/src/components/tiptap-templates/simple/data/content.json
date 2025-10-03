@@ -222,9 +222,9 @@
       ]
     },
     {
-      "type": "image",
+      "type": "cloudinaryImage",
       "attrs": {
-        "src": "/images/tiptap-ui-placeholder-image.jpg",
+        "src": "https://res.cloudinary.com/dyt0sogxc/image/upload/v1703123456/placeholder-image.jpg",
         "alt": "placeholder-image",
         "title": "placeholder-image"
       }

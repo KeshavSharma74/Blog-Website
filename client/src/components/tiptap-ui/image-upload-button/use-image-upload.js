@@ -24,7 +24,7 @@ export function canInsertImage(editor) {
   if (!editor || !editor.isEditable) return false
   if (
     !isExtensionAvailable(editor, "imageUpload") ||
-    isNodeTypeSelected(editor, ["image"])
+    isNodeTypeSelected(editor, ["cloudinaryImage"])
   )
     return false
 
@@ -36,7 +36,7 @@ export function canInsertImage(editor) {
  */
 export function isImageActive(editor) {
   if (!editor || !editor.isEditable) return false
-  return editor.isActive("imageUpload");
+  return editor.isActive("imageUpload") || editor.isActive("cloudinaryImage");
 }
 
 /**

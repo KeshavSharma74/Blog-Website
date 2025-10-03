@@ -259,26 +259,64 @@ export function isNodeTypeSelected(editor, types = []) {
  * @returns Promise resolving to the URL of the uploaded image
  */
 export const handleImageUpload = async (file, onProgress, abortSignal) => {
-  // Validate file
   if (!file) {
     throw new Error("No file provided")
   }
-
   if (file.size > MAX_FILE_SIZE) {
-    throw new Error(`File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`)
+    throw new Error(`File size exceeds maximum allowed (${MAX_FILE_SIZE / (1024 * 1024)}MB)`) }
+
+  const cloudName = import.meta.env.VITE_CLOUDINARY_CLOUD_NAME
+  const uploadPreset = import.meta.env.VITE_CLOUDINARY_UNSIGNED_PRESET
+
+  if (!cloudName || !uploadPreset) {
+    throw new Error("Cloudinary env not configured (VITE_CLOUDINARY_CLOUD_NAME, VITE_CLOUDINARY_UNSIGNED_PRESET)")
   }
 
-  // For demo/testing: Simulate upload progress. In production, replace the following code
-  // with your own upload implementation.
-  for (let progress = 0; progress <= 100; progress += 10) {
-    if (abortSignal?.aborted) {
-      throw new Error("Upload cancelled")
+  const url = `https://api.cloudinary.com/v1_1/${cloudName}/image/upload`
+  const formData = new FormData()
+  formData.append("file", file)
+  formData.append("upload_preset", uploadPreset)
+
+  const xhr = new XMLHttpRequest()
+
+  const uploadPromise = new Promise((resolve, reject) => {
+    xhr.open("POST", url)
+
+    xhr.upload.onprogress = (event) => {
+      if (event.lengthComputable) {
+        const progress = Math.round((event.loaded / event.total) * 100)
+        onProgress?.({ progress })
+      }
     }
-    await new Promise((resolve) => setTimeout(resolve, 500))
-    onProgress?.({ progress })
-  }
 
-  return "/images/tiptap-ui-placeholder-image.jpg"
+    xhr.onload = () => {
+      try {
+        const res = JSON.parse(xhr.responseText)
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve(res.secure_url || res.url)
+        } else {
+          reject(new Error(res.error?.message || "Cloudinary upload failed"))
+        }
+      } catch (_e) {
+        reject(new Error("Invalid Cloudinary response"))
+      }
+    }
+
+    xhr.onerror = () => reject(new Error("Network error during upload"))
+    xhr.onabort = () => reject(new Error("Upload cancelled"))
+
+    if (abortSignal) {
+      abortSignal.addEventListener("abort", () => {
+        try { xhr.abort() } catch {}
+      })
+    }
+
+    xhr.send(formData)
+  })
+
+  const secureUrl = await uploadPromise
+  onProgress?.({ progress: 100 })
+  return secureUrl
 }
 
 const ATTR_WHITESPACE =

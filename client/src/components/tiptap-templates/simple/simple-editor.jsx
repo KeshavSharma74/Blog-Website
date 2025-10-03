@@ -5,7 +5,6 @@ import { EditorContent, EditorContext, useEditor } from "@tiptap/react"
 
 // --- Tiptap Core Extensions ---
 import { StarterKit } from "@tiptap/starter-kit"
-import { Image } from "@tiptap/extension-image"
 import { TaskItem, TaskList } from "@tiptap/extension-list"
 import { TextAlign } from "@tiptap/extension-text-align"
 import { Typography } from "@tiptap/extension-typography"
@@ -25,6 +24,7 @@ import {
 
 // --- Tiptap Node ---
 import { ImageUploadNode } from "@//components/tiptap-node/image-upload-node/image-upload-node-extension"
+import { CloudinaryImage } from "@//components/tiptap-node/cloudinary-image-node/cloudinary-image-extension"
 import { HorizontalRule } from "@//components/tiptap-node/horizontal-rule-node/horizontal-rule-node-extension"
 import "@//components/tiptap-node/blockquote-node/blockquote-node.scss"
 import "@//components/tiptap-node/code-block-node/code-block-node.scss"
@@ -197,7 +197,7 @@ export function SimpleEditor({ handleSave, editorRef }) {
       TaskList,
       TaskItem.configure({ nested: true }),
       Highlight.configure({ multicolor: true }),
-      Image,
+      CloudinaryImage,
       Typography,
       Superscript,
       Subscript,

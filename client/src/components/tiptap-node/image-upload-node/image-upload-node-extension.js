@@ -19,7 +19,7 @@ export const ImageUploadNode = Node.create({
 
   addOptions() {
     return {
-      type: "image",
+      type: "cloudinaryImage",
       accept: "image/*",
       limit: 1,
       maxSize: 0,

@@ -187,4 +187,32 @@ const logout = (req, res) => {
   }
 };
 
-export {register,login,uploadProfileImage,getAllPosts}
+const checkAuth = (req,res) =>{
+  // console.log("Inside checkAuth controller");
+  const user = req.user;
+  // console.log("Authenticated user:", user);
+    try{
+        
+        if(!user){
+            return res.json({
+                success:false,
+                message:"User not authenticated",
+                user
+            })
+        } 
+        return res.json({
+          success:true,
+          message:"User is authenticated",
+          user
+        })
+    }
+    catch(error){
+        console.log(error.message);
+        return res.json({
+            success: false,
+            message: error.message,
+        });
+    }
+}
+
+export {register,login,uploadProfileImage,getAllPosts,checkAuth,logout};

@@ -26,7 +26,7 @@ postRouter.patch(
   updatePost
 );
 
-postRouter.delete('/delete/:id', protect, deletePost);
+postRouter.delete('/delete/:id', protect, isAdmin, deletePost);
 postRouter.get('/get-post/:id',getPostById);
 postRouter.get('/get-similar-post/:id',getSimilarCategoryPosts);
 
