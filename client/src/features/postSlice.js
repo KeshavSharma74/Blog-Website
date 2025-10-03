@@ -1,46 +1,47 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk, isRejectedWithValue } from "@reduxjs/toolkit";
 import axios from "axios";
+import { toast } from "react-hot-toast";
 
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000";
 axios.defaults.withCredentials = true;
 
-// Create post (admin only) - expects FormData with fields and files
+/* ----------------- THUNKS ----------------- */
+
+// Create post (admin only)
 export const createPost = createAsyncThunk(
   "post/createPost",
   async (formData, { rejectWithValue }) => {
     try {
-      const res = await axios.post(
-        `${API_URL}/api/post/create`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
-      );
+      const res = await axios.post(`${API_URL}/api/post/create`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      });
 
-      // ✅ CHECK THE RESPONSE BODY FOR THE SUCCESS FLAG
       if (!res.data.success) {
-        // If success is false, manually reject with the message from the API
         return rejectWithValue(res.data.message || "Authorization failed");
       }
 
-      // If success is true, return the post data
       return res.data.post;
-      
     } catch (err) {
-      // This catch block will now handle actual network/server errors (like 500)
       return rejectWithValue(err.response?.data?.message || "Failed to create post");
     }
   }
 );
 
-// Update post (admin only) - FormData optional for image changes
+// Update post (admin only)
 export const updatePost = createAsyncThunk(
   "post/updatePost",
   async ({ id, formData }, { rejectWithValue }) => {
     try {
-      const res = await axios.patch(
-        `${API_URL}/api/post/update/${id}`,
-        formData,
-        { headers: { "Content-Type": "multipart/form-data" }, withCredentials: true }
-      );
+      const res = await axios.patch(`${API_URL}/api/post/update/${id}`, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      });
+
+      if (!res.data.success) {
+        return rejectWithValue(res.data.message || "Authorization failed");
+      }
+
       return res.data.post;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to update post");
@@ -53,7 +54,14 @@ export const deletePost = createAsyncThunk(
   "post/deletePost",
   async (id, { rejectWithValue }) => {
     try {
-      await axios.delete(`${API_URL}/api/post/delete/${id}`, { withCredentials: true });
+      const res = await axios.delete(`${API_URL}/api/post/delete/${id}`, {
+        withCredentials: true,
+      });
+
+      if (!res.data.success) {
+        return rejectWithValue(res.data.message || "Authorization failed");
+      }
+
       return id;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to delete post");
@@ -67,6 +75,11 @@ export const getAllPosts = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const res = await axios.get(`${API_URL}/api/user/get-all-post`);
+
+      if (!res.data.success) {
+        return rejectWithValue(res.data.message || "Failed to fetch posts");
+      }
+
       return res.data.posts;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch posts");
@@ -74,12 +87,17 @@ export const getAllPosts = createAsyncThunk(
   }
 );
 
-// Get single post by id
+// Get single post by slug
 export const getPostBySlug = createAsyncThunk(
   "post/getPostBySlug",
   async (slug, { rejectWithValue }) => {
     try {
       const res = await axios.get(`${API_URL}/api/post/get-post/${slug}`);
+
+      if (!res.data.success) {
+        return rejectWithValue(res.data.message || "Post not found");
+      }
+
       return res.data.post;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch post");
@@ -87,18 +105,25 @@ export const getPostBySlug = createAsyncThunk(
   }
 );
 
-// Get similar posts by category based on current post id
+// Get similar posts
 export const getSimilarPosts = createAsyncThunk(
   "post/getSimilarPosts",
   async (slug, { rejectWithValue }) => {
     try {
       const res = await axios.get(`${API_URL}/api/post/get-similar-post/${slug}`);
+
+      if (!res.data.success) {
+        return rejectWithValue(res.data.message || "Failed to fetch similar posts");
+      }
+
       return res.data.posts;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch similar posts");
     }
   }
 );
+
+/* ----------------- SLICE ----------------- */
 
 const initialState = {
   currentPost: null,
@@ -163,7 +188,7 @@ const postSlice = createSlice({
         state.isDeleting = true;
         state.error = null;
       })
-      .addCase(deletePost.fulfilled, (state, _action) => {
+      .addCase(deletePost.fulfilled, (state) => {
         state.isDeleting = false;
         state.currentPost = null;
       })
@@ -203,7 +228,9 @@ const postSlice = createSlice({
       // similar
       .addCase(getSimilarPosts.fulfilled, (state, action) => {
         state.similarPosts = action.payload || [];
-      });
+      })
+
+      /*  Global matcher: show toast on any reject */
   },
 });
 
