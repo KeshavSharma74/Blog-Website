@@ -80,9 +80,9 @@ export const getPostBySlug = createAsyncThunk(
 // Get similar posts by category based on current post id
 export const getSimilarPosts = createAsyncThunk(
   "post/getSimilarPosts",
-  async (id, { rejectWithValue }) => {
+  async (slug, { rejectWithValue }) => {
     try {
-      const res = await axios.get(`${API_URL}/api/post/get-similar-post/${id}`);
+      const res = await axios.get(`${API_URL}/api/post/get-similar-post/${slug}`);
       return res.data.posts;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || "Failed to fetch similar posts");

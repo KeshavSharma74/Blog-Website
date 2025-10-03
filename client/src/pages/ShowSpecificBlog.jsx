@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { getPostBySlug } from '@/features/postSlice'
+import SimilarBlogs from '../components/SimilarBlogs'
 
 const ShowSpecificBlog = () => {
   const dispatch = useDispatch()
@@ -74,6 +75,7 @@ const ShowSpecificBlog = () => {
           </pre>
         )}
       </div>
+      <SimilarBlogs></SimilarBlogs>
     </div>
   )
 }

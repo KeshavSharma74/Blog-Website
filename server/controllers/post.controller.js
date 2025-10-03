@@ -167,24 +167,21 @@ export const getPostBySlug = async (req, res) => {
 
 export const getSimilarCategoryPosts = async (req, res) => {
   try {
-    const postId = req.params.id;
+    const { slug } = req.params;
 
-    const currentPost = await Post.findById(postId);
-
+    // Find the current post by slug
+    const currentPost = await Post.findOne({ slug });
     if (!currentPost) {
       return res.status(404).json({ success: false, message: "Post not found" });
     }
 
+    // Find similar posts with at least one matching category
     const similarPosts = await Post.find({
-      // This line EXCLUDES the current post from the results.
-      _id: { $ne: postId }, 
-
-      // This line finds posts that have AT LEAST ONE matching category.
-      // It does NOT require all categories to match.
-      category: { $in: currentPost.category }, 
+      slug: { $ne: slug }, // exclude current post
+      category: { $in: currentPost.category }, // match at least one category
     })
-    .sort({ createdAt: -1 })
-    .populate('user', 'name image');
+      .sort({ createdAt: -1 })
+      .populate("user", "name image");
 
     return res.status(200).json({
       success: true,

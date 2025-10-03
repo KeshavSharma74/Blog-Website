@@ -22,7 +22,7 @@ const App = () => {
   }
 
   return (
-    <div className="w-full h-full bg-black ">
+    <div className="w-full h-full ">
       <Toaster></Toaster>
       <Routes>
         <Route path="/" element={<Home />} />
