@@ -10,10 +10,10 @@ export const createPost = async (req, res) => {
 //   console.log("post create krne agya mei");
   try {
     const userId = req.user._id;
-    const { title, subTitle, category, content, contentHTML } = req.body;
+    const { title, subTitle, description, category, content, contentHTML } = req.body;
 
     // Validate required fields
-    if (!title || !subTitle || !category || !content) {
+    if (!title || !subTitle || !description || !category || !content) {
       return res.status(400).json({ success: false, message: "All fields are required" });
     }
 
@@ -41,6 +41,7 @@ export const createPost = async (req, res) => {
       mainImage: mainImageUrl,
       title,
       subTitle,
+      description,
       category: JSON.parse(category), // CHANGED: Parse the category string into an array
       content: JSON.parse(content),   // frontend sends JSON as string
       contentHTML: contentHTML || "", 
@@ -68,7 +69,7 @@ export const updatePost = async (req, res) => {
   try {
     const postId = req.params.id;
     const userId = req.user._id;
-    const { title, subTitle, category, content, contentHTML } = req.body;
+    const { title, subTitle, description, category, content, contentHTML } = req.body;
 
     // Find post
     const post = await Post.findById(postId);
@@ -88,6 +89,7 @@ export const updatePost = async (req, res) => {
     // Update other fields
     if (title) post.title = title;
     if (subTitle) post.subTitle = subTitle;
+    if (description) post.description = description;
     if (category) post.category = JSON.parse(category); // CHANGED: Also fixed here for updates
     if (content) post.content = JSON.parse(content);
     if (contentHTML) post.contentHTML = contentHTML;

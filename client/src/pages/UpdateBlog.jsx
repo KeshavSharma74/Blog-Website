@@ -1,15 +1,16 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams, useNavigate } from 'react-router-dom'
 import { SimpleEditor } from '@/components/tiptap-templates/simple/simple-editor'
-import { createPost } from '@/features/postSlice'
-import { useNavigate } from 'react-router-dom'
+import { updatePost, getPostBySlug } from '@/features/postSlice'
 import toast from 'react-hot-toast'
 
-const Blog = () => {
+const UpdateBlog = () => {
   const editorRef = useRef(null)
   const dispatch = useDispatch()
-  const { isCreating } = useSelector((state) => state.post)
   const navigate = useNavigate()
+  const { slug } = useParams()
+  const { currentPost, isUpdating, isFetching } = useSelector((state) => state.post)
 
   const [title, setTitle] = useState('')
   const [subTitle, setSubTitle] = useState('')
@@ -18,7 +19,7 @@ const Blog = () => {
   const [isCategoryOpen, setIsCategoryOpen] = useState(false)
   const [mainImageFile, setMainImageFile] = useState(null)
 
-  // Define available category options (adjust as needed)
+  // Define available category options
   const categoryOptions = [
     'AI',
     'Computer',
@@ -26,6 +27,30 @@ const Blog = () => {
     'Science',
     'Other',
   ]
+
+  // Fetch post data when component mounts
+  useEffect(() => {
+    if (slug) {
+      dispatch(getPostBySlug(slug))
+    }
+  }, [dispatch, slug])
+
+  // Populate form when post data is loaded
+  useEffect(() => {
+    if (currentPost) {
+      setTitle(currentPost.title || '')
+      setSubTitle(currentPost.subTitle || '')
+      setDescription(currentPost.description || '')
+      setSelectedCategories(currentPost.category || [])
+      
+      // Set editor content after a short delay to ensure editor is ready
+      if (editorRef.current && currentPost.content) {
+        setTimeout(() => {
+          editorRef.current.commands.setContent(currentPost.content)
+        }, 100)
+      }
+    }
+  }, [currentPost])
 
   const toggleCategory = (category) => {
     setSelectedCategories((prev) =>
@@ -53,16 +78,11 @@ const Blog = () => {
         toast.error('Please select at least one category')
         return
       }
-      if (!mainImageFile) {
-        toast.error('Main image is required')
-        return
-      }
 
       const formData = new FormData()
       formData.append('title', title)
       formData.append('subTitle', subTitle)
       formData.append('description', description)
-      // Backend expects JSON string array
       formData.append('category', JSON.stringify(selectedCategories))
       formData.append('content', JSON.stringify(editorData))
       formData.append('contentHTML', editorHTML)
@@ -71,21 +91,47 @@ const Blog = () => {
       }
 
       try {
-        await dispatch(createPost(formData)).unwrap()
-        toast.success('Post created successfully')
-        navigate('/')
+        await dispatch(updatePost({ id: currentPost._id, formData })).unwrap()
+        toast.success('Post updated successfully')
+        navigate('/blog')
       } catch (err) {
-        toast.error(typeof err === 'string' ? err : 'Failed to create post')
+        toast.error(typeof err === 'string' ? err : 'Failed to update post')
       }
     } else {
       console.log('Editor not ready yet')
     }
   }
 
+  if (isFetching) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
+          <p className="text-gray-600">Loading post...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!currentPost) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h2 className="text-2xl font-bold text-gray-900 mb-2">Post not found</h2>
+          <p className="text-gray-600">The post you're trying to edit does not exist.</p>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    // Full screen with white background
     <div className="h-[100vh] w-[100vw] flex justify-center items-start overflow-auto">
       <div className="w-full max-w-5xl px-4 py-6 space-y-4">
+        <div className="mb-6">
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">Update Post</h1>
+          <p className="text-gray-600">Edit your blog post below</p>
+        </div>
+
         {/* Form fields above editor */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
@@ -171,13 +217,19 @@ const Blog = () => {
             )}
           </div>
           <div className="md:col-span-2">
-            <label className="block text-sm font-medium mb-1">Main Image</label>
+            <label className="block text-sm font-medium mb-1">Main Image (Optional - leave empty to keep current)</label>
             <input
               type="file"
               accept="image/*"
               className="w-full border rounded px-3 py-2"
               onChange={(e) => setMainImageFile(e.target.files?.[0] || null)}
             />
+            {currentPost.mainImage && (
+              <div className="mt-2">
+                <p className="text-sm text-gray-600 mb-2">Current image:</p>
+                <img src={currentPost.mainImage} alt="Current" className="w-32 h-20 object-cover rounded" />
+              </div>
+            )}
           </div>
         </div>
 
@@ -188,10 +240,10 @@ const Blog = () => {
         <div className="flex justify-end">
           <button
             onClick={handleSave}
-            disabled={isCreating}
+            disabled={isUpdating}
             className="px-4 py-2 rounded bg-blue-600 text-white disabled:opacity-60"
           >
-            {isCreating ? 'Saving...' : 'Save'}
+            {isUpdating ? 'Updating...' : 'Update Post'}
           </button>
         </div>
       </div>
@@ -199,4 +251,4 @@ const Blog = () => {
   )
 }
 
-export default Blog
+export default UpdateBlog

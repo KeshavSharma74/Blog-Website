@@ -15,6 +15,10 @@ const postSchema = new Schema({
     unique: true,
     index: true,
   },
+  description:{
+    type: String,
+    required: true
+  },
   mainImage: {
     type: String,
     required: true
