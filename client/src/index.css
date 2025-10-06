@@ -14,7 +14,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 /* index.css */
 /* Base Prose Container */
 .prose {
-  max-width: 65ch;
+  /* max-width: 65ch; */
   color: #1f2937;
   font-size: 1.125rem;
   line-height: 1.75;
