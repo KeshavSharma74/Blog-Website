@@ -20,7 +20,7 @@ const Navigation = () => {
 
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      setIsScrolled(window.scrollY > 20);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -28,27 +28,25 @@ const Navigation = () => {
 
   return (
     <header
-      className={`fixed top-0 w-full border z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-white/5 border-b border-white/10 backdrop-blur-md shadow-sm'
-          : 'bg-transparent border-transparent'
+      className={`fixed top-0 w-full border-b-gray-200 border-b z-50 transition-shadow duration-300 bg-white ${
+        isScrolled ? 'shadow-md' : 'shadow-none'
       }`}
     >
-      <nav className="container max-w-[1300px] mx-auto px-6 py-4">
+      <nav className="container  max-w-[1300px] h-16 mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <Link to="/" className="text-xl font-semibold tracking-tight text-gray-300">
-            BLOGIFY
+          <Link to="/" className="text-xl font-bold tracking-tight text-gray-700">
+            KLOUDSHARK
           </Link>
 
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center space-x-8">
-            <Link to="/" className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide">Home</Link>
-            <Link to="/blog" className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide">Blogs</Link>
+          <div className="hidden lg:flex items-center text-[0.94rem] space-x-8">
+            <Link to="/" className="text-gray-500 hover:text-blue-700 transition-colors duration-200  tracking-wide">Home</Link>
+            <Link to="/blog" className="text-gray-500 hover:text-blue-700 transition-colors duration-200  tracking-wide">Blogs</Link>
             {navItems.map(({ label, path }) => (
               <Link
                 key={path}
                 to={path}
-                className="text-gray-300 hover:text-white text-[1.15rem] transition-colors duration-200 font-light tracking-wide"
+                className="text-gray-500  hover:text-blue-700  transition-colors duration-200 tracking-wide"
               >
                 {label}
               </Link>
@@ -56,10 +54,9 @@ const Navigation = () => {
           </div>
 
           {/* Desktop Buttons */}
-          <div className="hidden lg:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-4 ">
             {user ? (
               <>
-
                 <button
                   onClick={async () => {
                     try {
@@ -77,40 +74,50 @@ const Navigation = () => {
                       toast.error('Logout failed')
                     }
                   }}
-                  className="text-gray-300 hover:text-white hover:cursor-pointer transition-colors duration-200 font-light tracking-wide"
+                  className="text-white rounded-lg px-3 py-1 tracking-wide
+                 bg-gradient-to-r from-blue-500 to-purple-600 {/* Added gradient */}
+                 hover:from-blue-600 hover:to-purple-700 hover:cursor-pointer {/* Darker hover gradient */}
+                 transition-all duration-300 ease-in-out {/* Smoother transition */}
+                 shadow-lg hover:shadow-xl {/* Optional: Add shadow for depth */}
+                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 {/* Accessibility focus style */}
+                 "
                 >
                   Logout
                 </button>
               </>
             ) : (
-              <Link to="/login" className="text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide">
+              <Link to="/login"   className="text-white rounded-lg px-3 py-1 tracking-wide
+                 bg-gradient-to-r from-blue-500 to-purple-600 {/* Added gradient */}
+                 hover:from-blue-600 hover:to-purple-700 hover:cursor-pointer {/* Darker hover gradient */}
+                 transition-all duration-300 ease-in-out {/* Smoother transition */}
+                 shadow-lg hover:shadow-xl {/* Optional: Add shadow for depth */}
+                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 {/* Accessibility focus style */}
+                 ">
                 Login
               </Link>
             )}
-            <button className="rounded-full border border-white/10 bg-gradient-to-b from-white/10 to-white/5 px-4 py-2 text-gray-300 shadow-lg transition-all duration-300 hover:border-[#9b87f5]/30 hover:shadow-[0_0_20px_rgba(155,135,245,0.5)]">
-              Get Started
-            </button>
+
           </div>
 
           {/* Mobile Toggle Button */}
-          <button className="lg:hidden text-white" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
+          <button className="lg:hidden text-gray-700" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
             <List size={24} weight="light" />
           </button>
         </div>
 
         {/* Mobile Menu */}
         {isMobileMenuOpen && (
-          <div className="lg:hidden fixed inset-0 z-50 backdrop-blur-xl">
+          <div className="lg:hidden fixed inset-0 z-50 bg-white">
             <div className="container mx-auto px-6 py-4">
               <div className="flex items-center justify-between mb-8">
                 <Link
                   to="/"
                   onClick={() => setIsMobileMenuOpen(false)}
-                  className="text-xl font-semibold text-white tracking-tight"
+                  className="text-xl font-semibold text-gray-700 tracking-tight"
                 >
                   BLOGIFY
                 </Link>
-                <button onClick={() => setIsMobileMenuOpen(false)} className="text-white">
+                <button onClick={() => setIsMobileMenuOpen(false)} className="text-gray-700">
                   <X size={24} weight="light" />
                 </button>
               </div>
@@ -118,14 +125,14 @@ const Navigation = () => {
               <div className="flex flex-col items-center space-y-6">
                 <Link
                   to="/"
-                  className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
+                  className="block text-xl text-gray-700 hover:text-gray-900 transition-colors duration-200 font-light tracking-wide"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Home
                 </Link>
                 <Link
                   to="/blogs"
-                  className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
+                  className="block text-xl text-gray-700 hover:text-gray-900 transition-colors duration-200 font-light tracking-wide"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   Blogs
@@ -134,7 +141,7 @@ const Navigation = () => {
                   <Link
                     key={path}
                     to={path}
-                    className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
+                    className="block text-xl text-gray-700 hover:text-gray-900 transition-colors duration-200 font-light tracking-wide"
                     onClick={() => setIsMobileMenuOpen(false)}
                   >
                     {label}
@@ -161,7 +168,13 @@ const Navigation = () => {
                             toast.error('Logout failed')
                           }
                         }}
-                        className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
+                                          className="text-white rounded-lg px-3 py-1 tracking-wide
+                 bg-gradient-to-r from-blue-500 to-purple-600 {/* Added gradient */}
+                 hover:from-blue-600 hover:to-purple-700 hover:cursor-pointer {/* Darker hover gradient */}
+                 transition-all duration-300 ease-in-out {/* Smoother transition */}
+                 shadow-lg hover:shadow-xl {/* Optional: Add shadow for depth */}
+                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 {/* Accessibility focus style */}
+                 "
                       >
                         Logout
                       </button>
@@ -169,15 +182,18 @@ const Navigation = () => {
                   ) : (
                     <Link
                       to="/login"
-                      className="block text-xl text-gray-300 hover:text-white transition-colors duration-200 font-light tracking-wide"
+                                        className="text-white rounded-lg px-3 py-1 tracking-wide
+                 bg-gradient-to-r from-blue-500 to-purple-600 {/* Added gradient */}
+                 hover:from-blue-600 hover:to-purple-700 hover:cursor-pointer {/* Darker hover gradient */}
+                 transition-all duration-300 ease-in-out {/* Smoother transition */}
+                 shadow-lg hover:shadow-xl {/* Optional: Add shadow for depth */}
+                 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-400 {/* Accessibility focus style */}
+                 "
                       onClick={() => setIsMobileMenuOpen(false)}
                     >
                       Login
                     </Link>
                   )}
-                  <button className="w-full rounded-full border border-white/10 bg-gradient-to-b from-white/10 to-white/5 px-4 py-2 text-gray-300 shadow-lg transition-all duration-300 hover:border-[#9b87f5]/30 hover:shadow-[0_0_20px_rgba(155,135,245,0.5)]">
-                    Get Started
-                  </button>
                 </div>
               </div>
             </div>

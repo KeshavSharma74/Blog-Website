@@ -37,18 +37,18 @@ const BlogCard = ({ post }) => {
   const handleUpdate = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    console.log('Update clicked for post:', post.slug)
-    console.log('Current user:', user)
-    console.log('User role:', user?.role)
+    // console.log('Update clicked for post:', post.slug)
+    // console.log('Current user:', user)
+    // console.log('User role:', user?.role)
     // Navigate to update page with post data
     navigate(`/update-blog/${post.slug}`)
   }
 
   const isAdmin = user && user.role === 'admin'
   
-  console.log('BlogCard - user:', user)
-  console.log('BlogCard - isAdmin:', isAdmin)
-  console.log('BlogCard - user role:', user?.role)
+  // console.log('BlogCard - user:', user)
+  // console.log('BlogCard - isAdmin:', isAdmin)
+  // console.log('BlogCard - user role:', user?.role)
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 relative">

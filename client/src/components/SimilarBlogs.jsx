@@ -18,7 +18,7 @@ const SimilarBlogs = () => {
   if (!similarPosts || similarPosts.length === 0) return null;
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-5xl">
+    <div className="container mx-auto px-4 py-8 max-w-6xl">
       <h2 className="text-2xl font-bold text-gray-900 mb-6">
         Similar Blogs
       </h2>

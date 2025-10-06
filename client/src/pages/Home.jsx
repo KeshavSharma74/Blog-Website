@@ -1,14 +1,18 @@
 import React from 'react';
 import Navigation from '../components/Navigation';
+import Hero from '../components/Hero';
+import About from '../components/About';
 
 const Home = () => {
   return (
     <div
-      className="h-[100vh] bg-cover bg-center"
-      style={{ backgroundImage: "url('/bgImage.png')" }}
+      className=" bg-cover bg-center"
+      
     >
       <Navigation />
       {/* You can add more content here */}
+      <Hero></Hero>
+      <About></About>
     </div>
   );
 };

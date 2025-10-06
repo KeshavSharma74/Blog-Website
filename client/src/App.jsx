@@ -16,7 +16,7 @@ const App = () => {
   const { user, isCheckingAuth } = useSelector((state) => state.auth)
 
   useEffect(() => {
-    console.log('App: Starting auth check...')
+    // console.log('App: Starting auth check...')
     dispatch(checkAuth())
   }, [dispatch])
 

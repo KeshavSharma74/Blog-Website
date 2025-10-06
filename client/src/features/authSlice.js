@@ -23,12 +23,12 @@ export const checkAuth = createAsyncThunk(
   "auth/checkAuth",
   async (_, { rejectWithValue }) => {
     try {
-      console.log("Making checkAuth request to:", `${API_URL}/api/user/check-auth`);
+      // console.log("Making checkAuth request to:", `${API_URL}/api/user/check-auth`);
       const response = await axios.get(`${API_URL}/api/user/check-auth`);
-      console.log("checkAuth response:", response.data);
+      // console.log("checkAuth response:", response.data);
       return response.data;
     } catch (error) {
-      console.log("checkAuth error:", error);
+      // console.log("checkAuth error:", error);
       return rejectWithValue(
         error.response?.data?.message || "checking Authentication failed"
       );
@@ -142,12 +142,12 @@ const authSlice = createSlice({
         state.isCheckingAuth = true;
       })
       .addCase(checkAuth.fulfilled, (state, action) => {
-        console.log("checkAuth fulfilled:", action.payload);
+        // console.log("checkAuth fulfilled:", action.payload);
         state.isCheckingAuth = false;
         state.user = action.payload.user || null;
       })
       .addCase(checkAuth.rejected, (state, action) => {
-        console.log("checkAuth rejected:", action.payload);
+        // console.log("checkAuth rejected:", action.payload);
         state.isCheckingAuth = false;
         state.user = null;
       })

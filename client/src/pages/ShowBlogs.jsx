@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getAllPosts } from '@/features/postSlice'
 import BlogCard from '@/components/BlogCard'
 import toast from 'react-hot-toast'
+import Navigation from '../components/Navigation'
 
 const ShowBlogs = () => {
   const dispatch = useDispatch()
@@ -47,7 +48,8 @@ const ShowBlogs = () => {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+      <Navigation></Navigation>
+      <div className="container mx-auto mt-16 px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">All Blogs</h1>
