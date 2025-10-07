@@ -1,22 +1,50 @@
 import { useState, useEffect } from 'react';
 import { List, X } from 'phosphor-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout } from '@/features/authSlice';
 
-const navItems = [
-  { label: 'Features', path: '#features' },
-  { label: 'Pricing', path: '#pricing' },
-  { label: 'Testimonials', path: '#testimonials' },
-  { label: 'FAQ', path: '#faq' },
-];
-
-const Navigation = () => {
+const Navigation = ({ scrollToSection, refs }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const location = useLocation();
   const user = useSelector((state) => state.auth.user);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleScrollClick = (section) => {
+    // Check if we're on the home page
+    const isOnHomePage = location.pathname === '/';
+    
+    // If not on home page, navigate to home with scroll to specific section
+    if (!isOnHomePage) {
+      navigate('/', { state: { scrollTo: section } });
+      setIsMobileMenuOpen(false);
+      return;
+    }
+    
+    // If on home page, use normal scroll behavior
+    if (isOnHomePage && scrollToSection && refs) {
+      switch (section) {
+        case 'about':
+          scrollToSection(refs.aboutRef);
+          break;
+        case 'testimonials':
+          scrollToSection(refs.testimonialRef);
+          break;
+        case 'faq':
+          scrollToSection(refs.faqRef);
+          break;
+        case 'features':
+          scrollToSection(refs.latestBlogsRef);
+          break;
+        default:
+          break;
+      }
+    }
+    setIsMobileMenuOpen(false); // Close mobile menu after click
+  };
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -38,21 +66,37 @@ const Navigation = () => {
 
         {/* Desktop Nav Links */}
         <div className="hidden lg:flex items-center text-[0.94rem] space-x-8">
-          <Link to="/" className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide">
-            Home
-          </Link>
-          <Link to="/blog" className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide">
+          <span
+            onClick={() => handleScrollClick('features')}
+            className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide cursor-pointer"
+          >
+            Features
+          </span>
+          <span
+            onClick={() => handleScrollClick('about')}
+            className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide cursor-pointer"
+          >
+            About
+          </span>
+          <span
+            onClick={() => handleScrollClick('testimonials')}
+            className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide cursor-pointer"
+          >
+            Testimonials
+          </span>
+          <span
+            onClick={() => handleScrollClick('faq')}
+            className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide cursor-pointer"
+          >
+            FAQ
+          </span>
+          {/* NEW: Blogs Link */}
+          <Link
+            to="/blog"
+            className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide cursor-pointer"
+          >
             Blogs
           </Link>
-          {navItems.map(({ label, path }) => (
-            <a
-              key={path}
-              href={path}
-              className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide"
-            >
-              {label}
-            </a>
-          ))}
         </div>
 
         {/* Desktop Buttons */}
@@ -117,30 +161,38 @@ const Navigation = () => {
           </div>
 
           <div className="flex flex-col items-center space-y-6 mt-8">
-            <Link
-              to="/"
-              className="text-lg text-gray-700 hover:text-blue-700 tracking-wide"
-              onClick={() => setIsMobileMenuOpen(false)}
+            <span
+              onClick={() => handleScrollClick('features')}
+              className="text-lg text-gray-700 hover:text-blue-700 tracking-wide cursor-pointer"
             >
-              Home
-            </Link>
+              Features
+            </span>
+            <span
+              onClick={() => handleScrollClick('about')}
+              className="text-lg text-gray-700 hover:text-blue-700 tracking-wide cursor-pointer"
+            >
+              About
+            </span>
+            <span
+              onClick={() => handleScrollClick('testimonials')}
+              className="text-lg text-gray-700 hover:text-blue-700 tracking-wide cursor-pointer"
+            >
+              Testimonials
+            </span>
+            <span
+              onClick={() => handleScrollClick('faq')}
+              className="text-lg text-gray-700 hover:text-blue-700 tracking-wide cursor-pointer"
+            >
+              FAQ
+            </span>
+            {/* NEW: Blogs link for mobile */}
             <Link
               to="/blog"
-              className="text-lg text-gray-700 hover:text-blue-700 tracking-wide"
               onClick={() => setIsMobileMenuOpen(false)}
+              className="text-lg text-gray-700 hover:text-blue-700 tracking-wide cursor-pointer"
             >
               Blogs
             </Link>
-            {navItems.map(({ label, path }) => (
-              <a
-                key={path}
-                href={path}
-                className="text-lg text-gray-700 hover:text-blue-700 tracking-wide"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {label}
-              </a>
-            ))}
 
             <div className="pt-6">
               {user ? (
@@ -171,8 +223,8 @@ const Navigation = () => {
               ) : (
                 <Link
                   to="/login"
-                  className="text-white rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:cursor-pointer"
                   onClick={() => setIsMobileMenuOpen(false)}
+                  className="text-white rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg hover:cursor-pointer"
                 >
                   Login
                 </Link>

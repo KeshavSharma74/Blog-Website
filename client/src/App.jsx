@@ -10,6 +10,7 @@ import { checkAuth } from '@/features/authSlice'
 import ShowBlogs from './pages/ShowBlogs'
 import ShowSpecificBlog from './pages/ShowSpecificBlog'
 import AdminRoute from './components/AdminRoute'
+import Footer from './components/Footer'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/blog" element={<ShowBlogs />} />
         <Route path="/blog/:slug" element={<ShowSpecificBlog />} />
       </Routes>
+      <Footer></Footer>
     </div>
   )
 }
