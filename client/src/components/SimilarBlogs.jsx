@@ -8,9 +8,15 @@ const SimilarBlogs = ({ currentPostSlug }) => {
   const dispatch = useDispatch();
   const { similarPosts, isFetchingSimilar } = useSelector((state) => state.post);
 
+  // Debug logging
+  console.log('SimilarBlogs component - currentPostSlug:', currentPostSlug);
+  console.log('SimilarBlogs component - similarPosts:', similarPosts);
+  console.log('SimilarBlogs component - isFetchingSimilar:', isFetchingSimilar);
+
   useEffect(() => {
     // Fetch similar posts when the component mounts or the current post slug changes
     if (currentPostSlug) {
+      console.log('Fetching similar posts for slug:', currentPostSlug);
       dispatch(getSimilarPosts(currentPostSlug));
     }
   }, [dispatch, currentPostSlug]);
@@ -24,9 +30,28 @@ const SimilarBlogs = ({ currentPostSlug }) => {
     </div>
   );
 
-  // Don't render the component if there are no similar posts to show
-  if (!isFetchingSimilar && (!similarPosts || similarPosts.length === 0)) {
-    return null;
+  // Show loading state
+  if (isFetchingSimilar) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <h3 className="text-sm font-bold uppercase text-gray-500 mb-4 tracking-wider">
+          Related Articles
+        </h3>
+        <SkeletonLoader />
+      </div>
+    );
+  }
+
+  // Show message when no similar posts found
+  if (!similarPosts || similarPosts.length === 0) {
+    return (
+      <div className="bg-white border border-gray-200 rounded-lg p-6">
+        <h3 className="text-sm font-bold uppercase text-gray-500 mb-4 tracking-wider">
+          Related Articles
+        </h3>
+        <p className="text-gray-500 text-sm">No related articles found.</p>
+      </div>
+    );
   }
 
   return (

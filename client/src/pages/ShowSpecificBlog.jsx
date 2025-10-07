@@ -146,8 +146,8 @@ const ShowSpecificBlog = () => {
         {/* Right Column: Similar Blogs Sidebar */}
         <aside className="mt-12 lg:mt-0">
           <div className="lg:sticky lg:top-24">
-            {/* Note: Corrected prop to 'currentPostId' as expected by the SimilarBlogs component */}
-            <SimilarBlogs currentPostId={post._id} />
+            {/* Pass the current post's slug to fetch similar posts */}
+            <SimilarBlogs currentPostSlug={post.slug} />
           </div>
         </aside>
       </div>
