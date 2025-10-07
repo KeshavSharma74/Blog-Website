@@ -134,6 +134,7 @@ const initialState = {
   isDeleting: false,
   isFetching: false,
   isFetchingAll: false,
+  isFetchingSimilar: false,
   error: null,
 };
 
@@ -150,6 +151,7 @@ const postSlice = createSlice({
       state.isDeleting = false;
       state.isFetching = false;
       state.isFetchingAll = false;
+      state.isFetchingSimilar = false;
       state.error = null;
     },
   },
@@ -226,8 +228,17 @@ const postSlice = createSlice({
       })
 
       // similar
+      .addCase(getSimilarPosts.pending, (state) => {
+        state.isFetchingSimilar = true;
+        state.error = null;
+      })
       .addCase(getSimilarPosts.fulfilled, (state, action) => {
+        state.isFetchingSimilar = false;
         state.similarPosts = action.payload || [];
+      })
+      .addCase(getSimilarPosts.rejected, (state, action) => {
+        state.isFetchingSimilar = false;
+        state.error = action.payload;
       })
 
       /*  Global matcher: show toast on any reject */

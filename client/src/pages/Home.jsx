@@ -10,7 +10,8 @@ import LatestBlogs from '../components/LatestBlogs';
 const Home = () => {
   const location = useLocation();
   
-  // Create refs for each section
+  // Create refs for each section, including the Hero section
+  const heroRef = useRef(null);
   const aboutRef = useRef(null);
   const testimonialRef = useRef(null);
   const faqRef = useRef(null);
@@ -27,6 +28,9 @@ const Home = () => {
       // Small delay to ensure the page has loaded
       setTimeout(() => {
         switch (location.state.scrollTo) {
+          case 'home': // CHANGED: Added case for 'home'
+            scrollToSection(heroRef);
+            break;
           case 'about':
             scrollToSection(aboutRef);
             break;
@@ -50,9 +54,11 @@ const Home = () => {
     <div className="bg-[#F9FAFB] bg-cover bg-center">
       <Navigation
         scrollToSection={scrollToSection}
-        refs={{ aboutRef, testimonialRef, faqRef, latestBlogsRef }}
+        // CHANGED: Pass heroRef to the refs object
+        refs={{ heroRef, aboutRef, testimonialRef, faqRef, latestBlogsRef }}
       />
-      <Hero />
+      {/* CHANGED: Wrapped Hero in a div with the new ref */}
+      <div ref={heroRef}><Hero /></div>
       <div ref={aboutRef}><About /></div>
       <div ref={testimonialRef}><Testimonial /></div>
       <div ref={faqRef}><FAQSection /></div>

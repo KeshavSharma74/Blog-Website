@@ -14,19 +14,19 @@ const Navigation = ({ scrollToSection, refs }) => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const handleScrollClick = (section) => {
-    // Check if we're on the home page
     const isOnHomePage = location.pathname === '/';
     
-    // If not on home page, navigate to home with scroll to specific section
     if (!isOnHomePage) {
       navigate('/', { state: { scrollTo: section } });
       setIsMobileMenuOpen(false);
       return;
     }
     
-    // If on home page, use normal scroll behavior
     if (isOnHomePage && scrollToSection && refs) {
       switch (section) {
+        case 'home':
+          scrollToSection(refs.heroRef);
+          break;
         case 'about':
           scrollToSection(refs.aboutRef);
           break;
@@ -43,7 +43,7 @@ const Navigation = ({ scrollToSection, refs }) => {
           break;
       }
     }
-    setIsMobileMenuOpen(false); // Close mobile menu after click
+    setIsMobileMenuOpen(false);
   };
 
   useEffect(() => {
@@ -66,6 +66,12 @@ const Navigation = ({ scrollToSection, refs }) => {
 
         {/* Desktop Nav Links */}
         <div className="hidden lg:flex items-center text-[0.94rem] space-x-8">
+          <span
+            onClick={() => handleScrollClick('home')}
+            className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide cursor-pointer"
+          >
+            Home
+          </span>
           <span
             onClick={() => handleScrollClick('features')}
             className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide cursor-pointer"
@@ -90,7 +96,6 @@ const Navigation = ({ scrollToSection, refs }) => {
           >
             FAQ
           </span>
-          {/* NEW: Blogs Link */}
           <Link
             to="/blog"
             className="text-gray-500 hover:text-blue-700 transition-colors duration-200 tracking-wide cursor-pointer"
@@ -102,29 +107,40 @@ const Navigation = ({ scrollToSection, refs }) => {
         {/* Desktop Buttons */}
         <div className="hidden lg:flex items-center space-x-4">
           {user ? (
-            <button
-              onClick={async () => {
-                try {
-                  const action = await dispatch(logout());
-                  if (logout.fulfilled.match(action)) {
-                    const data = action.payload;
-                    const success = Boolean(data?.success);
-                    const message =
-                      data?.message || (success ? 'Logged out' : 'Logout failed');
-                    success ? toast.success(message) : toast.error(message);
-                  } else {
-                    const message =
-                      action.payload || action.error?.message || 'Logout failed';
-                    toast.error(message);
+            <>
+              {/* Admin Button - Only visible for admin users */}
+              {user.role === 'admin' && (
+                <Link
+                  to="/create-blog"
+                  className="text-white rounded-lg px-4 py-1 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 hover:cursor-pointer transition-all duration-300 shadow-lg font-medium"
+                >
+                  Create Blog
+                </Link>
+              )}
+              <button
+                onClick={async () => {
+                  try {
+                    const action = await dispatch(logout());
+                    if (logout.fulfilled.match(action)) {
+                      const data = action.payload;
+                      const success = Boolean(data?.success);
+                      const message =
+                        data?.message || (success ? 'Logged out' : 'Logout failed');
+                      success ? toast.success(message) : toast.error(message);
+                    } else {
+                      const message =
+                        action.payload || action.error?.message || 'Logout failed';
+                      toast.error(message);
+                    }
+                  } catch {
+                    toast.error('Logout failed');
                   }
-                } catch {
-                  toast.error('Logout failed');
-                }
-              }}
-              className="text-white hover:cursor-pointer rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
-            >
-              Logout
-            </button>
+                }}
+                className="text-white hover:cursor-pointer rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+              >
+                Logout
+              </button>
+            </>
           ) : (
             <Link
               to="/login"
@@ -162,6 +178,12 @@ const Navigation = ({ scrollToSection, refs }) => {
 
           <div className="flex flex-col items-center space-y-6 mt-8">
             <span
+              onClick={() => handleScrollClick('home')}
+              className="text-lg text-gray-700 hover:text-blue-700 tracking-wide cursor-pointer"
+            >
+              Home
+            </span>
+            <span
               onClick={() => handleScrollClick('features')}
               className="text-lg text-gray-700 hover:text-blue-700 tracking-wide cursor-pointer"
             >
@@ -185,7 +207,6 @@ const Navigation = ({ scrollToSection, refs }) => {
             >
               FAQ
             </span>
-            {/* NEW: Blogs link for mobile */}
             <Link
               to="/blog"
               onClick={() => setIsMobileMenuOpen(false)}
@@ -194,32 +215,44 @@ const Navigation = ({ scrollToSection, refs }) => {
               Blogs
             </Link>
 
-            <div className="pt-6">
+            <div className="pt-6 flex flex-col items-center space-y-3">
               {user ? (
-                <button
-                  onClick={async () => {
-                    try {
-                      const action = await dispatch(logout());
-                      setIsMobileMenuOpen(false);
-                      if (logout.fulfilled.match(action)) {
-                        const data = action.payload;
-                        const success = Boolean(data?.success);
-                        const message =
-                          data?.message || (success ? 'Logged out' : 'Logout failed');
-                        success ? toast.success(message) : toast.error(message);
-                      } else {
-                        const message =
-                          action.payload || action.error?.message || 'Logout failed';
-                        toast.error(message);
+                <>
+                  {/* Admin Button - Only visible for admin users */}
+                  {user.role === 'admin' && (
+                    <Link
+                      to="/blog"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className="text-white rounded-lg px-4 py-1 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 hover:cursor-pointer transition-all duration-300 shadow-lg font-medium"
+                    >
+                      Admin Panel
+                    </Link>
+                  )}
+                  <button
+                    onClick={async () => {
+                      try {
+                        const action = await dispatch(logout());
+                        setIsMobileMenuOpen(false);
+                        if (logout.fulfilled.match(action)) {
+                          const data = action.payload;
+                          const success = Boolean(data?.success);
+                          const message =
+                            data?.message || (success ? 'Logged out' : 'Logout failed');
+                          success ? toast.success(message) : toast.error(message);
+                        } else {
+                          const message =
+                            action.payload || action.error?.message || 'Logout failed';
+                          toast.error(message);
+                        }
+                      } catch {
+                        toast.error('Logout failed');
                       }
-                    } catch {
-                      toast.error('Logout failed');
-                    }
-                  }}
-                  className="text-white rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 hover:cursor-pointer transition-all duration-300 shadow-lg"
-                >
-                  Logout
-                </button>
+                    }}
+                    className="text-white rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 hover:cursor-pointer transition-all duration-300 shadow-lg"
+                  >
+                    Logout
+                  </button>
+                </>
               ) : (
                 <Link
                   to="/login"

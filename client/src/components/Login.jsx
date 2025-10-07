@@ -6,6 +6,7 @@ import { IoEyeOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { login, signupUser } from "@/features/authSlice";
 import { useNavigate } from "react-router-dom";
+import Navigation from "./Navigation";
 
 const Login = () => {
   const [mode, setMode] = useState("login"); // "login" or "signup"
@@ -67,7 +68,8 @@ const Login = () => {
   };
 
   return (
-    <div className="bg-black min-h-screen flex items-center justify-center p-4">
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <Navigation></Navigation>
       <div className="bg-white flex w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden">
         {/* Left Image */}
         <div className="hidden md:block md:w-1/2">

@@ -1,22 +1,23 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { useParams, Link } from 'react-router-dom'
-import { getPostBySlug } from '@/features/postSlice'
-import SimilarBlogs from '../components/SimilarBlogs'
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useParams, Link } from 'react-router-dom';
+import { getPostBySlug } from '@/features/postSlice';
+import SimilarBlogs from '../components/SimilarBlogs';
 import Navigation from '../components/Navigation';
-import { MdOutlineKeyboardArrowRight } from 'react-icons/md'
+import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 
 const ShowSpecificBlog = () => {
-  const dispatch = useDispatch()
-  const { slug } = useParams()
-  const { currentPost, isFetching, error } = useSelector((state) => state.post)
+  const dispatch = useDispatch();
+  const { slug } = useParams();
+  const { currentPost, isFetching, error } = useSelector((state) => state.post);
 
   useEffect(() => {
     if (slug) {
-      dispatch(getPostBySlug(slug))
+      dispatch(getPostBySlug(slug));
     }
-  }, [dispatch, slug])
+  }, [dispatch, slug]);
 
+  // ... (isFetching and error states remain the same) ...
   if (isFetching) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -25,7 +26,7 @@ const ShowSpecificBlog = () => {
           <p className="text-gray-600">Loading post...</p>
         </div>
       </div>
-    )
+    );
   }
 
   if (error || !currentPost) {
@@ -36,17 +37,15 @@ const ShowSpecificBlog = () => {
           <p className="text-gray-600">The post you're looking for does not exist.</p>
         </div>
       </div>
-    )
+    );
   }
 
-  const post = currentPost
+  const post = currentPost;
 
-  // Function to transform YouTube links into iframes
-  const transformYouTubeLinks = (html) => {
-    if (!html) return ''
-
-    const youtubeRegex = /(?:<a[^>]*>)?\s*(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+))\s*(?:<\/a>)?/g
-
+  // ... (transformYouTubeLinks function remains the same) ...
+    const transformYouTubeLinks = (html) => {
+    if (!html) return '';
+    const youtubeRegex = /(?:<a[^>]*>)?\s*(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+))\s*(?:<\/a>)?/g;
     return html.replace(youtubeRegex, (_, url, videoId) => {
       return `
         <div class="my-4">
@@ -59,17 +58,20 @@ const ShowSpecificBlog = () => {
             allowfullscreen>
           </iframe>
         </div>
-      `
-    })
-  }
+      `;
+    });
+  };
+
 
   return (
-    <div className="min-h-screen overflow-x-auto bg-gray-50">
+    <div className="min-h-screen bg-gray-50">
       <Navigation />
       
       {/* Header Section */}
-      <div className="container mx-auto mt-[60px]  px-4 py-8 flex flex-col items-center min-w-[100vw] bg-[#e7eff8]">
-        <div className='w-full max-w-[1260px] flex flex-col md:flex-row justify-between'>
+      {/* This outer div remains full-width to allow the background color to span the screen */}
+      <div className="mt-[60px] py-8 w-full bg-[#e7eff8]">
+        {/* This inner div now constrains the header content to 1300px */}
+        <div className='w-full max-w-[1300px] mx-auto px-4 flex flex-col md:flex-row justify-between'> {/* CHANGED HERE */}
           {/* Left Column */}
           <div className='w-full md:w-[50%] flex flex-col gap-6'>
             <div className='flex justify-start items-center gap-1 text-sm text-gray-400 mb-2 py-2'>
@@ -77,8 +79,6 @@ const ShowSpecificBlog = () => {
               <MdOutlineKeyboardArrowRight size={20} />
               <Link to='/blog' className='text-blue-700 hover:underline text-[0.98rem]'>Blog</Link>
             </div>
-
-            {/* Categories */}
             {post.category?.length > 0 && (
               <div className="flex gap-2">
                 {post.category.map((c, i) => (
@@ -88,9 +88,7 @@ const ShowSpecificBlog = () => {
                 ))}
               </div>
             )}
-
             <p className='text-[2.5rem] font-extrabold'>{post.title}</p>
-
             <div className='mt-6 flex gap-5 items-center'>
               <div className='flex flex-col'>
                 <p className='text-gray-400 text-[1rem]'>Updated</p>
@@ -103,21 +101,10 @@ const ShowSpecificBlog = () => {
                 </span>
               </div>
               <span className='text-gray-400 text-[1.2rem]'>|</span>
-              <div className="flex items-center gap-3 rounded-lg p-2">
+              <div className="flex items-center gap-3">
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-300">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="white"
-                    viewBox="0 0 24 24"
-                    strokeWidth="1.5"
-                    stroke="white"
-                    className="h-5 w-5"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-                    />
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="h-5 w-5">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
                   </svg>
                 </div>
                 <div>
@@ -127,7 +114,6 @@ const ShowSpecificBlog = () => {
               </div>
             </div>
           </div>
-
           {/* Right Column */}
           <div className='w-full md:w-[43%] my-auto mt-6 md:mt-0'>
             <img
@@ -140,9 +126,11 @@ const ShowSpecificBlog = () => {
         </div>
       </div>
 
-      {/* Post Content */}
-      <div className='flex justify-center items-center mt-6 px-4'>
-        <div className='w-full max-w-[1200px]'>
+      {/* Main Content and Sidebar Section */}
+      {/* This container is now also constrained to a max-width of 1300px */}
+      <div className="w-full max-w-[1300px] mx-auto px-4 mt-12 pb-12 grid grid-cols-1 lg:grid-cols-3 lg:gap-12"> {/* CHANGED HERE */}
+        {/* Left Column: Post Content */}
+        <main className="lg:col-span-2">
           {post.contentHTML ? (
             <div
               className="prose prose-lg prose-blue max-w-none dark:prose-invert"
@@ -153,13 +141,18 @@ const ShowSpecificBlog = () => {
               {JSON.stringify(post.content, null, 2)}
             </pre>
           )}
-        </div>
+        </main>
+        
+        {/* Right Column: Similar Blogs Sidebar */}
+        <aside className="mt-12 lg:mt-0">
+          <div className="lg:sticky lg:top-24">
+            {/* Note: Corrected prop to 'currentPostId' as expected by the SimilarBlogs component */}
+            <SimilarBlogs currentPostId={post._id} />
+          </div>
+        </aside>
       </div>
-
-      {/* Similar Blogs Section */}
-      <SimilarBlogs />
     </div>
-  )
-}
+  );
+};
 
-export default ShowSpecificBlog
+export default ShowSpecificBlog;

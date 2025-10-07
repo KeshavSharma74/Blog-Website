@@ -42,8 +42,8 @@ import { BlockquoteButton } from "@//components/tiptap-ui/blockquote-button"
 import { CodeBlockButton } from "@//components/tiptap-ui/code-block-button"
 import {
   ColorHighlightPopover,
-  ColorHighlightPopoverContent,
   ColorHighlightPopoverButton,
+  ColorHighlightPopoverContent,
 } from "@//components/tiptap-ui/color-highlight-popover"
 import {
   LinkPopover,
@@ -64,22 +64,17 @@ import { useIsMobile } from "@//hooks/use-mobile"
 import { useWindowSize } from "@//hooks/use-window-size"
 import { useCursorVisibility } from "@//hooks/use-cursor-visibility"
 
-// --- Components ---
-import { ThemeToggle } from "@//components/tiptap-templates/simple/theme-toggle"
-
 // --- Lib ---
 import { handleImageUpload, MAX_FILE_SIZE } from "@//lib/tiptap-utils"
 
 // --- Styles ---
 import "@//components/tiptap-templates/simple/simple-editor.scss"
 
-import content from "@//components/tiptap-templates/simple/data/content.json"
-
 const MainToolbarContent = ({
   onHighlighterClick,
   onLinkClick,
   isMobile,
-  onSave
+  onSave,
 }) => {
   return (
     <>
@@ -91,7 +86,10 @@ const MainToolbarContent = ({
       <ToolbarSeparator />
       <ToolbarGroup>
         <HeadingDropdownMenu levels={[1, 2, 3, 4]} portal={isMobile} />
-        <ListDropdownMenu types={["bulletList", "orderedList", "taskList"]} portal={isMobile} />
+        <ListDropdownMenu
+          types={["bulletList", "orderedList", "taskList"]}
+          portal={isMobile}
+        />
         <BlockquoteButton />
         <CodeBlockButton />
       </ToolbarGroup>
@@ -125,23 +123,12 @@ const MainToolbarContent = ({
       <ToolbarGroup>
         <ImageUploadButton text="Add" />
       </ToolbarGroup>
-      <ToolbarSeparator />
-      <ToolbarGroup>
-
-      </ToolbarGroup>
       <Spacer />
-      {isMobile && <ToolbarSeparator />}
-      <ToolbarGroup>
-        <ThemeToggle />
-      </ToolbarGroup>
     </>
-  );
+  )
 }
 
-const MobileToolbarContent = ({
-  type,
-  onBack
-}) => (
+const MobileToolbarContent = ({ type, onBack }) => (
   <>
     <ToolbarGroup>
       <Button data-style="ghost" onClick={onBack}>
@@ -208,7 +195,7 @@ export function SimpleEditor({ handleSave, editorRef }) {
         onError: (error) => console.error("Upload failed:", error),
       }),
     ],
-    content,
+    content: "<p></p>", // Empty paragraph
   })
 
   const rect = useCursorVisibility({
@@ -216,7 +203,6 @@ export function SimpleEditor({ handleSave, editorRef }) {
     overlayHeight: toolbarRef.current?.getBoundingClientRect().height ?? 0,
   })
 
-  // Expose editor instance to parent component
   React.useEffect(() => {
     if (editorRef && editor) {
       editorRef.current = editor
@@ -230,7 +216,7 @@ export function SimpleEditor({ handleSave, editorRef }) {
   }, [isMobile, mobileView])
 
   return (
-    <div >
+    <div className="simple-editor-wrapper">
       <EditorContext.Provider value={{ editor }}>
         <Toolbar
           ref={toolbarRef}
@@ -240,22 +226,29 @@ export function SimpleEditor({ handleSave, editorRef }) {
                   bottom: `calc(100% - ${height - rect.y}px)`,
                 }
               : {}),
-          }}>
+          }}
+        >
           {mobileView === "main" ? (
             <MainToolbarContent
               onHighlighterClick={() => setMobileView("highlighter")}
               onLinkClick={() => setMobileView("link")}
               isMobile={isMobile}
-              onSave={handleSave} />
+              onSave={handleSave}
+            />
           ) : (
             <MobileToolbarContent
               type={mobileView === "highlighter" ? "highlighter" : "link"}
-              onBack={() => setMobileView("main")} />
+              onBack={() => setMobileView("main")}
+            />
           )}
         </Toolbar>
 
-        <EditorContent editor={editor} role="presentation" className="simple-editor-content" />
+        <EditorContent
+          editor={editor}
+          role="presentation"
+          className="simple-editor-content"
+        />
       </EditorContext.Provider>
     </div>
-  );
+  )
 }
