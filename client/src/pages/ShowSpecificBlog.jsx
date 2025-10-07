@@ -64,37 +64,37 @@ const ShowSpecificBlog = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen overflow-x-auto bg-gray-50">
       <Navigation />
       
       {/* Header Section */}
-      <div className="container mx-auto mt-[60px] px-4 py-8 flex flex-col items-center min-w-[100vw] bg-[#e7eff8]">
-        <div className='w-full max-w-[1300px] flex flex-col md:flex-row justify-between'>
+      <div className="container mx-auto mt-[60px]  px-4 py-8 flex flex-col items-center min-w-[100vw] bg-[#e7eff8]">
+        <div className='w-full max-w-[1260px] flex flex-col md:flex-row justify-between'>
           {/* Left Column */}
           <div className='w-full md:w-[50%] flex flex-col gap-6'>
             <div className='flex justify-start items-center gap-1 text-sm text-gray-400 mb-2 py-2'>
-              <Link to='/' className='text-blue-700 hover:underline'>Home</Link>
+              <Link to='/' className='text-blue-700 hover:underline text-[0.98rem]'>Home</Link>
               <MdOutlineKeyboardArrowRight size={20} />
-              <Link to='/blog' className='text-blue-700 hover:underline'>Blog</Link>
+              <Link to='/blog' className='text-blue-700 hover:underline text-[0.98rem]'>Blog</Link>
             </div>
 
             {/* Categories */}
             {post.category?.length > 0 && (
               <div className="flex gap-2">
                 {post.category.map((c, i) => (
-                  <span key={i} className="px-2 py-0.5 rounded border border-gray-400 text-gray-500 text-[14px]">
+                  <span key={i} className="px-2 py-0.5 rounded border border-gray-400 text-gray-500 text-[0.98rem]">
                     {c}
                   </span>
                 ))}
               </div>
             )}
 
-            <p className='text-[1.9rem] font-extrabold'>{post.title}</p>
+            <p className='text-[2.5rem] font-extrabold'>{post.title}</p>
 
-            <div className='mt-6 flex gap-3 items-center'>
+            <div className='mt-6 flex gap-5 items-center'>
               <div className='flex flex-col'>
-                <p className='text-gray-400 text-[0.8rem]'>Updated</p>
-                <span className='text-[0.92rem]'>
+                <p className='text-gray-400 text-[1rem]'>Updated</p>
+                <span className='text-[1.07rem]'>
                   {new Date(post.createdAt).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'long',
@@ -102,7 +102,7 @@ const ShowSpecificBlog = () => {
                   })}
                 </span>
               </div>
-              <span className='text-gray-400'>|</span>
+              <span className='text-gray-400 text-[1.2rem]'>|</span>
               <div className="flex items-center gap-3 rounded-lg p-2">
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-300">
                   <svg
@@ -121,19 +121,19 @@ const ShowSpecificBlog = () => {
                   </svg>
                 </div>
                 <div>
-                  <p className="text-sm text-gray-400 text-[0.8rem]">By</p>
-                  <p className="font-medium text-gray-800 text-[0.92rem]">{post.user.name}</p>
+                  <p className="text-sm text-gray-400 text-[1rem]">By</p>
+                  <p className="font-medium text-gray-800 text-[1.07rem]">{post.user.name}</p>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Right Column */}
-          <div className='w-full md:w-[43%] mt-6 md:mt-0'>
+          <div className='w-full md:w-[43%] my-auto mt-6 md:mt-0'>
             <img
               src={post.mainImage}
               alt={post.title}
-              className="w-full h-80 object-cover rounded-lg shadow-md"
+              className="w-full h-[90%] object-cover rounded-lg shadow-md"
               onError={(e) => { e.target.src = 'https://via.placeholder.com/800x400?text=No+Image' }}
             />
           </div>

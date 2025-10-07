@@ -47,9 +47,10 @@ const ShowBlogs = () => {
   }
 
   return (
+    
     <div className="min-h-screen bg-gray-50">
       <Navigation></Navigation>
-      <div className="container mx-auto mt-16 px-4 py-8">
+      <div className="container mx-auto mt-16 px-4 py-8 max-w-[1310px]">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">All Blogs</h1>

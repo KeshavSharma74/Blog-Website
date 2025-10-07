@@ -127,9 +127,7 @@ const MainToolbarContent = ({
       </ToolbarGroup>
       <ToolbarSeparator />
       <ToolbarGroup>
-        <Button onClick={onSave} data-style="primary">
-          Save
-        </Button>
+
       </ToolbarGroup>
       <Spacer />
       {isMobile && <ToolbarSeparator />}

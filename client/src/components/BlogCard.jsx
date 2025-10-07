@@ -37,27 +37,19 @@ const BlogCard = ({ post }) => {
   const handleUpdate = (e) => {
     e.preventDefault()
     e.stopPropagation()
-    // console.log('Update clicked for post:', post.slug)
-    // console.log('Current user:', user)
-    // console.log('User role:', user?.role)
-    // Navigate to update page with post data
     navigate(`/update-blog/${post.slug}`)
   }
 
   const isAdmin = user && user.role === 'admin'
-  
-  // console.log('BlogCard - user:', user)
-  // console.log('BlogCard - isAdmin:', isAdmin)
-  // console.log('BlogCard - user role:', user?.role)
 
   return (
-    <div className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 relative">
+    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
       {/* Admin Action Buttons */}
       {isAdmin && (
-        <div className="absolute top-2 right-2 z-10 flex gap-2">
+        <div className="absolute top-3 right-3 z-10 flex gap-2">
           <button
             onClick={handleUpdate}
-            className="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-full shadow-lg transition-colors duration-200"
+            className="bg-white/90 backdrop-blur-sm hover:bg-white text-gray-700 p-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 border border-gray-200"
             title="Update Post"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -67,7 +59,7 @@ const BlogCard = ({ post }) => {
           <button
             onClick={handleDelete}
             disabled={isDeleting}
-            className="bg-red-500 hover:bg-red-600 text-white p-2 rounded-full shadow-lg transition-colors duration-200 disabled:opacity-50"
+            className="bg-white/90 backdrop-blur-sm hover:bg-white text-red-600 p-2.5 rounded-lg shadow-md hover:shadow-lg transition-all duration-200 disabled:opacity-50 border border-gray-200"
             title="Delete Post"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -77,53 +69,51 @@ const BlogCard = ({ post }) => {
         </div>
       )}
 
-      {/* Card Content */}
+      {/* Entire Card is Clickable */}
       <Link to={`/blog/${post.slug}`} className="block">
-        {/* Main Image */}
-        <div className="aspect-w-16 aspect-h-9">
-          <img
-            src={post.mainImage}
-            alt={post.title}
-            className="w-full h-48 object-cover"
-            onError={(e) => {
-              e.target.src = 'https://via.placeholder.com/400x225?text=No+Image'
-            }}
-          />
-        </div>
-        
-        {/* Content */}
-        <div className="p-6">
+        {/* Main Image - HEIGHT INCREASED */}
+        <img
+          className="rounded-t-lg w-full h-56 object-cover"
+          src={post.mainImage}
+          alt={post.title}
+          onError={(e) => {
+            e.target.src = 'https://via.placeholder.com/400x225?text=No+Image'
+          }}
+        />
+
+        {/* Content - PADDING REDUCED */}
+        <div className="p-4">
           {/* Title */}
-          <h3 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-2">
             {post.title}
-          </h3>
-          
-          {/* Subtitle */}
-          <p className="text-gray-600 mb-4 line-clamp-3">
-            {post.subTitle}
-          </p>
-          
-          {/* Date */}
-          <div className="flex items-center text-sm text-gray-500">
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-            </svg>
-            {formatDate(post.createdAt)}
+          </h5>
+
+        {/* Subtitle */}
+        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-3">
+          {post.subTitle}
+        </p>
+
+        {/* Date */}
+        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+          <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          {formatDate(post.createdAt)}
+        </div>
+
+        {/* Categories */}
+        {post.category && post.category.length > 0 && (
+          <div className="mb-3 flex flex-wrap gap-2">
+            {post.category.map((cat, index) => (
+              <span
+                key={index}
+                className="inline-block bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-xs px-2 py-1 rounded-full"
+              >
+                {cat}
+              </span>
+            ))}
           </div>
-          
-          {/* Categories */}
-          {post.category && post.category.length > 0 && (
-            <div className="mt-4 flex flex-wrap gap-2">
-              {post.category.map((cat, index) => (
-                <span
-                  key={index}
-                  className="inline-block bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full"
-                >
-                  {cat}
-                </span>
-              ))}
-            </div>
-          )}
+        )}
         </div>
       </Link>
     </div>

@@ -1,88 +1,79 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const About = () => {
   return (
-    <div className='pb-20 ' >
+    <div className="pb-20 px-2 sm:px-6 lg:px-8">
       {/* Heading Section */}
-      <div className="container mx-auto px-4 py-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">
+      <div className="container  mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 text-center">
+        <h1 className="text-center text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-6 sm:mb-8 text-gray-800">
           About Kloudshark
         </h1>
-        <p className="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto">
-          A dedicated space for insightful articles and stories – each piece curated with expertise, passion, and a commitment to knowledge.
+        <p className="text-sm sm:text-base md:text-base text-slate-500 mt-3 sm:mt-4 max-w-2xl mx-auto leading-relaxed">
+          A dedicated space for insightful articles and stories — each piece curated with expertise,
+          passion, and a commitment to knowledge.
         </p>
       </div>
 
       {/* Content Section */}
-      <section className="max-w-6xl mx-auto flex flex-col md:flex-row gap-10 px-4 md:px-0">
-        {/* Left Side - Image with community overlay */}
-        <div className="relative flex-1 flex justify-center items-center">
+      <section className="max-w-[1300px]  mx-auto flex flex-col lg:flex-row gap-8 lg:gap-10 px-4 sm:px-6 lg:px-8">
+        {/* Left Side - Image */}
+        <div className="flex-1">
           <img
-            className="max-w-md w-full object-cover rounded-2xl shadow-lg"
-            src="https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?q=80&w=451&h=451&auto=format&fit=crop"
+            className="w-full h-full object-cover rounded-2xl shadow-lg"
+            src="about.png"
             alt="Kloudshark team working on content"
           />
-
-          {/* Overlay Box */}
-          <div className="flex items-center gap-2 max-w-xs absolute  bottom-6 left-30 bg-white p-4 rounded-xl shadow-md">
-            <div className="flex -space-x-3 shrink-0">
-              <img
-                src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=200"
-                alt="team member 1"
-                className="w-9 h-9 rounded-full border-2 border-white hover:-translate-y-1 transition"
-              />
-              <img
-                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?q=80&w=200"
-                alt="team member 2"
-                className="w-9 h-9 rounded-full border-2 border-white hover:-translate-y-1 transition"
-              />
-              <img
-                src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=200&h=200&auto=format&fit=crop"
-                alt="team member 3"
-                className="w-9 h-9 rounded-full border-2 border-white hover:-translate-y-1 transition"
-              />
-              <div className="flex items-center justify-center text-xs font-medium text-white w-9 h-9 rounded-full border-2 border-white bg-blue-600 hover:-translate-y-1 transition">
-                50+
-              </div>
-            </div>
-            <p className="text-sm font-medium text-slate-800">
-              Our growing reader community
-            </p>
-          </div>
         </div>
 
         {/* Right Side - Mission Statement */}
-        <div className="flex-1 flex flex-col justify-center">
-          <h2 className="text-xl uppercase font-semibold text-slate-700">
+        <div className="flex-1 flex flex-col justify-center sm:px-0">
+          <h2 className="text-lg sm:text-xl uppercase font-semibold text-slate-700">
             Our Mission
           </h2>
-          <div className="w-24 h-[3px] rounded-full bg-gradient-to-r from-blue-600 to-[#D9E6FF] mt-2"></div>
+          <div className="w-20 sm:w-24 h-[3px] rounded-full bg-gradient-to-r from-blue-600 to-[#D9E6FF] mt-2"></div>
 
-          <p className="mt-8 text-gray-700">
-            At Kloudshark, we believe in the power of knowledge to inform, inspire, and foster growth. Our platform is dedicated to providing high-quality, thoroughly researched articles across a spectrum of tech-related topics, lifestyle, and educational content.
+          <p className="mt-6 sm:mt-8 text-sm sm:text-base text-gray-700 leading-relaxed">
+            At Kloudshark, we believe in the power of knowledge to inform, inspire, and foster
+            growth. Our platform is dedicated to providing high-quality, thoroughly researched
+            articles across a spectrum of tech-related topics, lifestyle, and educational content.
           </p>
-          <p className="mt-4 text-gray-700">
-            Our team of expert writers and administrators carefully crafts each piece, ensuring accuracy, relevance, and engaging narratives. We strive to be your go-to source for understanding complex concepts, discovering new trends, and gaining valuable insights.
+          <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed">
+            Our team of expert writers and administrators carefully crafts each piece, ensuring
+            accuracy, relevance, and engaging narratives. We strive to be your go-to source for
+            understanding complex concepts, discovering new trends, and gaining valuable insights.
           </p>
-          <p className="mt-4 text-gray-700">
-            While only our dedicated administrators publish content, our ultimate goal is to empower our readers with the information they need to stay ahead, learn something new, or simply enjoy a well-written story.
+          <p className="mt-4 text-sm sm:text-base text-gray-700 leading-relaxed">
+            While only our dedicated administrators publish content, our ultimate goal is to
+            empower our readers with the information they need to stay ahead, learn something new,
+            or simply enjoy a well-written story.
           </p>
 
-          <button className="flex w-[210px] items-center gap-2 mt-8 hover:-translate-y-0.5 transition bg-gradient-to-r from-blue-600 to-blue-400 py-3 px-8 rounded-full text-white shadow-md">
-            <span>Explore Articles</span>
-            <svg
-              width="13"
-              height="12"
-              viewBox="0 0 13 12"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
+          {/* Explore Articles Button */}
+          <div className="mt-6">
+            <Link
+              to="/blog"
+              className="flex w-full sm:w-[210px] items-center justify-center text-white rounded-lg px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
             >
-              <path
-                d="M12.53 6.53a.75.75 0 0 0 0-1.06L7.757.697a.75.75 0 1 0-1.06 1.06L10.939 6l-4.242 4.243a.75.75 0 0 0 1.06 1.06zM0 6v.75h12v-1.5H0z"
-                fill="#fff"
-              />
-            </svg>
-          </button>
+              Explore Articles
+              <svg
+                className="ml-2"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M5 3L11 8L5 13"
+                  stroke="white"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Link>
+          </div>
         </div>
       </section>
     </div>
