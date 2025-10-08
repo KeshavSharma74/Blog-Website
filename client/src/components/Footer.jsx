@@ -14,12 +14,11 @@ const UpArrowIcon = () => (
 
 const Footer = () => {
   const categoryLinks = [
-    { name: 'Technology', to: '/category/technology' },
-    { name: 'Web Development', to: '/category/web-development' },
-    { name: 'Programming', to: '/category/programming' },
-    { name: 'Data Science', to: '/category/data-science' },
-    { name: 'Tutorials', to: '/category/tutorials' },
-    { name: 'Opinions', to: '/category/opinions' },
+    { name: 'AI', to: '/category/ai' },
+    { name: 'Computer', to: '/category/computer' },
+    { name: 'Tech', to: '/category/tech' },
+    { name: 'Science', to: '/category/science' },
+    { name: 'Other', to: '/category/other' },
   ];
 
   const quickLinks = [

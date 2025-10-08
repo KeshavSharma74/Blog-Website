@@ -22,6 +22,11 @@ const Home = () => {
     ref.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   };
 
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   // Handle navigation state for auto-scrolling
   useEffect(() => {
     if (location.state?.scrollTo) {

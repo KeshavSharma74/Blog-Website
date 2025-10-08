@@ -1,15 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
 import { getPostBySlug } from '@/features/postSlice';
 import SimilarBlogs from '../components/SimilarBlogs';
 import Navigation from '../components/Navigation';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import AllCategories from '../components/AllCategories';
+import TableOfContents from '../components/TableOfContents';
 
 const ShowSpecificBlog = () => {
   const dispatch = useDispatch();
   const { slug } = useParams();
   const { currentPost, isFetching, error } = useSelector((state) => state.post);
+  const [processedHtml, setProcessedHtml] = useState('');
+
+  // Scroll to top when component mounts or slug changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [slug]);
 
   useEffect(() => {
     if (slug) {
@@ -17,7 +25,13 @@ const ShowSpecificBlog = () => {
     }
   }, [dispatch, slug]);
 
-  // ... (isFetching and error states remain the same) ...
+  // Initialize processed HTML when post content changes
+  useEffect(() => {
+    if (currentPost?.contentHTML) {
+      setProcessedHtml(currentPost.contentHTML);
+    }
+  }, [currentPost?.contentHTML]);
+
   if (isFetching) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -42,8 +56,7 @@ const ShowSpecificBlog = () => {
 
   const post = currentPost;
 
-  // ... (transformYouTubeLinks function remains the same) ...
-    const transformYouTubeLinks = (html) => {
+  const transformYouTubeLinks = (html) => {
     if (!html) return '';
     const youtubeRegex = /(?:<a[^>]*>)?\s*(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+))\s*(?:<\/a>)?/g;
     return html.replace(youtubeRegex, (_, url, videoId) => {
@@ -62,16 +75,13 @@ const ShowSpecificBlog = () => {
     });
   };
 
-
   return (
     <div className="min-h-screen bg-gray-50">
       <Navigation />
       
       {/* Header Section */}
-      {/* This outer div remains full-width to allow the background color to span the screen */}
       <div className="mt-[60px] py-8 w-full bg-[#e7eff8]">
-        {/* This inner div now constrains the header content to 1300px */}
-        <div className='w-full max-w-[1300px] mx-auto px-4 flex flex-col md:flex-row justify-between'> {/* CHANGED HERE */}
+        <div className='w-full max-w-[1300px] mx-auto px-4 flex flex-col md:flex-row justify-between'>
           {/* Left Column */}
           <div className='w-full md:w-[50%] flex flex-col gap-6'>
             <div className='flex justify-start items-center gap-1 text-sm text-gray-400 mb-2 py-2'>
@@ -82,9 +92,9 @@ const ShowSpecificBlog = () => {
             {post.category?.length > 0 && (
               <div className="flex gap-2">
                 {post.category.map((c, i) => (
-                  <span key={i} className="px-2 py-0.5 rounded border border-gray-400 text-gray-500 text-[0.98rem]">
+                  <Link to={`/category/${c}`} key={i} className="px-2 py-0.5 rounded border hover:border-blue-600 hover:text-blue-600 transition-all duration-200 border-gray-400 text-gray-500 text-[0.98rem]">
                     {c}
-                  </span>
+                  </Link>
                 ))}
               </div>
             )}
@@ -127,14 +137,13 @@ const ShowSpecificBlog = () => {
       </div>
 
       {/* Main Content and Sidebar Section */}
-      {/* This container is now also constrained to a max-width of 1300px */}
-      <div className="w-full max-w-[1300px] mx-auto px-4 mt-12 pb-12 grid grid-cols-1 lg:grid-cols-3 lg:gap-12"> {/* CHANGED HERE */}
+      <div className="w-full max-w-[1300px] mx-auto px-4 mt-12 pb-12 grid grid-cols-1 lg:grid-cols-3 lg:gap-12">
         {/* Left Column: Post Content */}
         <main className="lg:col-span-2">
-          {post.contentHTML ? (
+          {processedHtml ? (
             <div
               className="prose prose-lg prose-blue max-w-none dark:prose-invert"
-              dangerouslySetInnerHTML={{ __html: transformYouTubeLinks(post.contentHTML) }}
+              dangerouslySetInnerHTML={{ __html: transformYouTubeLinks(processedHtml) }}
             />
           ) : (
             <pre className="bg-gray-100 p-4 rounded text-sm overflow-auto">
@@ -143,11 +152,20 @@ const ShowSpecificBlog = () => {
           )}
         </main>
         
-        {/* Right Column: Similar Blogs Sidebar */}
+        {/* Right Column: Sidebar */}
         <aside className="mt-12 lg:mt-0">
-          <div className="lg:sticky lg:top-24">
-            {/* Pass the current post's slug to fetch similar posts */}
+          <div className="lg:sticky lg:top-24 space-y-6">
+            {/* Table of Contents */}
+            <TableOfContents 
+              htmlContent={post.contentHTML} 
+              onContentUpdate={setProcessedHtml}
+            />
+            
+            {/* Similar Blogs */}
             <SimilarBlogs currentPostSlug={post.slug} />
+            
+            {/* All Categories */}
+            <AllCategories />
           </div>
         </aside>
       </div>

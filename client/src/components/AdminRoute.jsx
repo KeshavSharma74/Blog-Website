@@ -7,12 +7,12 @@ const AdminRoute = ({ children }) => {
   const { user, isCheckingAuth } = useSelector((state) => state.auth)
 
   useEffect(() => {
-    console.log('=== AdminRoute Debug ===')
-    console.log('isCheckingAuth:', isCheckingAuth)
-    console.log('user:', user)
-    console.log('user role:', user?.role)
-    console.log('isAdmin:', user && user.role === 'admin')
-    console.log('========================')
+    // console.log('=== AdminRoute Debug ===')
+    // console.log('isCheckingAuth:', isCheckingAuth)
+    // console.log('user:', user)
+    // console.log('user role:', user?.role)
+    // console.log('isAdmin:', user && user.role === 'admin')
+    // console.log('========================')
   }, [user, isCheckingAuth])
 
   // Wait for auth check to complete

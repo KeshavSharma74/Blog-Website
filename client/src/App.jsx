@@ -11,6 +11,7 @@ import ShowBlogs from './pages/ShowBlogs'
 import ShowSpecificBlog from './pages/ShowSpecificBlog'
 import AdminRoute from './components/AdminRoute'
 import Footer from './components/Footer'
+import CategoryBlogs from './pages/CategoryBlogs'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -39,6 +40,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/blog" element={<ShowBlogs />} />
         <Route path="/blog/:slug" element={<ShowSpecificBlog />} />
+        <Route path="/category/:categoryName" element={<CategoryBlogs />} />
       </Routes>
       <Footer></Footer>
     </div>
