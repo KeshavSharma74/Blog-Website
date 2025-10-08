@@ -9,14 +9,14 @@ const SimilarBlogs = ({ currentPostSlug }) => {
   const { similarPosts, isFetchingSimilar } = useSelector((state) => state.post);
 
   // Debug logging
-  console.log('SimilarBlogs component - currentPostSlug:', currentPostSlug);
-  console.log('SimilarBlogs component - similarPosts:', similarPosts);
-  console.log('SimilarBlogs component - isFetchingSimilar:', isFetchingSimilar);
+  // console.log('SimilarBlogs component - currentPostSlug:', currentPostSlug);
+  // console.log('SimilarBlogs component - similarPosts:', similarPosts);
+  // console.log('SimilarBlogs component - isFetchingSimilar:', isFetchingSimilar);
 
   useEffect(() => {
     // Fetch similar posts when the component mounts or the current post slug changes
     if (currentPostSlug) {
-      console.log('Fetching similar posts for slug:', currentPostSlug);
+      // console.log('Fetching similar posts for slug:', currentPostSlug);
       dispatch(getSimilarPosts(currentPostSlug));
     }
   }, [dispatch, currentPostSlug]);
