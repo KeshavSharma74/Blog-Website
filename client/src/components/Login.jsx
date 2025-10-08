@@ -1,7 +1,5 @@
 import React, { useState, useRef } from "react";
 import toast from "react-hot-toast";
-import { FaRegEyeSlash } from "react-icons/fa";
-import { IoEyeOutline } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { login, signupUser } from "@/features/authSlice";
 import { useNavigate } from "react-router-dom";
@@ -15,7 +13,6 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -72,18 +69,6 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
-  };
-
-  // ---- Fixed Password Input Behavior for Safari ----
-  const togglePasswordVisibility = () => {
-    const input = passwordRef.current;
-    const cursorPos = input.selectionStart;
-    setShowPassword((prev) => !prev);
-
-    setTimeout(() => {
-      input.focus();
-      input.setSelectionRange(cursorPos, cursorPos);
-    }, 0);
   };
 
   return (
@@ -143,33 +128,19 @@ const Login = () => {
               />
             </div>
 
-            {/* Password Input - Fixed for Safari */}
-            <div className="relative flex items-center mt-4 w-full border border-gray-300/60 h-12 rounded-full px-4 focus-within:border-indigo-500">
+            {/* Password Input - Always Visible */}
+            <div className="flex items-center mt-4 w-full border border-gray-300/60 h-12 rounded-full px-4 focus-within:border-indigo-500">
               <input
                 ref={passwordRef}
-                type={showPassword ? "text" : "password"}
+                type="text"
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full pr-10 tracking-widest"
+                className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full"
                 autoComplete="current-password"
-                style={{
-                  // fontFamily: !showPassword ? "password" : "inherit",
-                  WebkitTextSecurity: showPassword ? "none" : "disc",
-                }}
                 required
               />
-              <span
-                onClick={togglePasswordVisibility}
-                className="absolute right-3 cursor-pointer text-gray-500 hover:text-gray-700"
-              >
-                {showPassword ? (
-                  <FaRegEyeSlash size={20} />
-                ) : (
-                  <IoEyeOutline size={20} />
-                )}
-              </span>
             </div>
 
             {/* Remember Me & Forgot Password only for login */}
