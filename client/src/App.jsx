@@ -12,6 +12,9 @@ import ShowSpecificBlog from './pages/ShowSpecificBlog'
 import AdminRoute from './components/AdminRoute'
 import Footer from './components/Footer'
 import CategoryBlogs from './pages/CategoryBlogs'
+import About from './pages/About'
+import Testimonials from './pages/Testimonials'
+import FAQ from './pages/FAQ'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -35,6 +38,9 @@ const App = () => {
       <Toaster></Toaster>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/testimonials" element={<Testimonials />} />
+        <Route path="/faq" element={<FAQ />} />
         <Route path="/create-blog" element={<AdminRoute><Blog /></AdminRoute>} />
         <Route path="/update-blog/:slug" element={<AdminRoute><UpdateBlog /></AdminRoute>} />
         <Route path="/login" element={<Login />} />

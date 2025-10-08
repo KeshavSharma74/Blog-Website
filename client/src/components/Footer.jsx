@@ -43,7 +43,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-slate-800 text-gray-300">
+    <footer className="bg-gradient-to-b from-[#7e05d4] to-[#180047] text-gray-300">
       <div className="max-w-7xl mx-auto px-6 py-12">
         {/* Top section with link columns */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -90,7 +90,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="my-10 border-gray-700" />
+        <hr className="my-10 border-purple-900" />
 
         {/* Bottom section with socials and back-to-top */}
         <div className="flex flex-col md:flex-row items-center justify-between gap-8">
@@ -121,7 +121,7 @@ const Footer = () => {
             <button
               onClick={scrollToTop}
               aria-label="Back to top"
-              className="bg-slate-700 p-2 rounded-md hover:bg-slate-600 transition-colors duration-200"
+              className="bg-purple-800 p-2 rounded-md hover:bg-purple-700 transition-colors duration-200"
             >
               <UpArrowIcon />
             </button>
@@ -129,8 +129,8 @@ const Footer = () => {
         </div>
 
         {/* Centered Copyright */}
-        <div className="text-center pt-4 mt-4 border-gray-700">
-          <p className="text-sm text-gray-500">
+        <div className="text-center pt-4 mt-4 border-t border-purple-900">
+          <p className="text-sm text-gray-400">
             © Kloudshark Inc. 2025. All Rights Reserved.
           </p>
         </div>
