@@ -80,7 +80,7 @@ const Login = () => {
         <div className="hidden md:block md:w-1/2">
           <img
             className="h-full w-full object-cover"
-            src="https://raw.githubusercontent.com/prebuiltui/prebuiltui/main/assets/login/leftSideImage.png"
+            src="login.png"
             alt="leftSideImage"
           />
         </div>
@@ -165,7 +165,7 @@ const Login = () => {
             {/* Submit Button */}
             <button
               type="submit"
-              className="mt-8 w-full h-12 rounded-full text-white font-semibold bg-indigo-500 hover:bg-indigo-600 transition-colors flex items-center justify-center"
+              className="mt-8 w-full h-12 rounded-full text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 flex items-center justify-center"
               disabled={loading}
             >
               {loading || isLoading
