@@ -35,10 +35,9 @@ const Login = () => {
     try {
       let action;
       if (mode === "login") {
-        action = await dispatch(login({
-          email: formData.email,
-          password: formData.password,
-        }));
+        action = await dispatch(
+          login({ email: formData.email, password: formData.password })
+        );
       } else {
         action = await dispatch(signupUser(formData));
       }
@@ -46,9 +45,13 @@ const Login = () => {
       if (login.fulfilled.match(action) || signupUser.fulfilled.match(action)) {
         const data = action.payload;
         const success = Boolean(data?.success);
-        const message = data?.message || (success
-          ? mode === "login" ? "Login Successful!" : "Signup Successful!"
-          : "Something went wrong!");
+        const message =
+          data?.message ||
+          (success
+            ? mode === "login"
+              ? "Login Successful!"
+              : "Signup Successful!"
+            : "Something went wrong!");
 
         if (success) {
           toast.success(message);
@@ -68,8 +71,9 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <Navigation></Navigation>
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50">
+      <Navigation />
+
       <div className="bg-white flex w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden">
         {/* Left Image */}
         <div className="hidden md:block md:w-1/2">
@@ -97,7 +101,7 @@ const Login = () => {
 
             {/* Name input only for signup */}
             {mode === "signup" && (
-              <div className="flex items-center mt-4 w-full bg-transparent border border-gray-300/60 h-12 rounded-full overflow-hidden px-4 gap-3 focus-within:border-indigo-500">
+              <div className="flex items-center mt-4 w-full border border-gray-300/60 h-12 rounded-full px-4 gap-3 focus-within:border-indigo-500">
                 <input
                   type="text"
                   name="name"
@@ -111,7 +115,7 @@ const Login = () => {
             )}
 
             {/* Email Input */}
-            <div className="flex items-center mt-4 w-full bg-transparent border border-gray-300/60 h-12 rounded-full overflow-hidden px-4 gap-3 focus-within:border-indigo-500">
+            <div className="flex items-center mt-4 w-full border border-gray-300/60 h-12 rounded-full px-4 gap-3 focus-within:border-indigo-500">
               <input
                 type="email"
                 name="email"
@@ -124,19 +128,19 @@ const Login = () => {
             </div>
 
             {/* Password Input with eye icon */}
-            <div className="relative flex items-center mt-4 w-full border border-gray-300/60 h-12 rounded-full overflow-hidden px-4 focus-within:border-indigo-500">
+            <div className="relative flex items-center mt-4 w-full border border-gray-300/60 h-12 rounded-full px-4 focus-within:border-indigo-500">
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full pr-10"
+                className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full pr-10 relative z-10"
                 required
               />
               <span
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 cursor-pointer text-gray-500 hover:text-gray-700"
+                className="absolute right-3 cursor-pointer text-gray-500 hover:text-gray-700 z-20"
               >
                 {showPassword ? <FaRegEyeSlash size={20} /> : <IoEyeOutline size={20} />}
               </span>
@@ -176,9 +180,7 @@ const Login = () => {
 
             {/* Switch mode link */}
             <p className="text-gray-500/90 text-sm mt-6">
-              {mode === "login"
-                ? "Don't have an account? "
-                : "Already have an account? "}
+              {mode === "login" ? "Don't have an account? " : "Already have an account? "}
               <span
                 className="text-indigo-500 font-semibold hover:underline cursor-pointer"
                 onClick={() => setMode(mode === "login" ? "signup" : "login")}
