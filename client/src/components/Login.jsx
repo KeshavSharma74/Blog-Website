@@ -1,4 +1,3 @@
-// src/components/Login.js
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
@@ -135,8 +134,9 @@ const Login = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full pr-10 relative z-10"
+                className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full pr-10 z-10"
                 required
+                autoComplete="current-password" // Added for better browser compatibility
               />
               <span
                 onClick={() => setShowPassword(!showPassword)}
