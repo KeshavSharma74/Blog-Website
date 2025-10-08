@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { IoEyeOutline } from "react-icons/io5";
@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import Navigation from "./Navigation";
 
 const Login = () => {
-  const [mode, setMode] = useState("login"); // "login" or "signup"
+  const [mode, setMode] = useState("login");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -17,16 +17,17 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLoading } = useSelector((state) => state.auth);
+  const passwordRef = useRef(null);
+
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
   };
-
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { isLoading } = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,8 +59,12 @@ const Login = () => {
         } else {
           toast.error(message);
         }
-      } else if (login.rejected.match(action) || signupUser.rejected.match(action)) {
-        const message = action.payload || action.error?.message || "Something went wrong!";
+      } else if (
+        login.rejected.match(action) ||
+        signupUser.rejected.match(action)
+      ) {
+        const message =
+          action.payload || action.error?.message || "Something went wrong!";
         toast.error(message);
       }
     } catch (error) {
@@ -67,6 +72,18 @@ const Login = () => {
     } finally {
       setLoading(false);
     }
+  };
+
+  // ---- Fixed Password Input Behavior for Safari ----
+  const togglePasswordVisibility = () => {
+    const input = passwordRef.current;
+    const cursorPos = input.selectionStart;
+    setShowPassword((prev) => !prev);
+
+    setTimeout(() => {
+      input.focus();
+      input.setSelectionRange(cursorPos, cursorPos);
+    }, 0);
   };
 
   return (
@@ -126,23 +143,32 @@ const Login = () => {
               />
             </div>
 
-            {/* Password Input with eye icon */}
+            {/* Password Input - Fixed for Safari */}
             <div className="relative flex items-center mt-4 w-full border border-gray-300/60 h-12 rounded-full px-4 focus-within:border-indigo-500">
               <input
+                ref={passwordRef}
                 type={showPassword ? "text" : "password"}
                 name="password"
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Password"
-                className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full pr-10 z-10"
+                className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full pr-10 tracking-widest"
+                autoComplete="current-password"
+                style={{
+                  // fontFamily: !showPassword ? "password" : "inherit",
+                  WebkitTextSecurity: showPassword ? "none" : "disc",
+                }}
                 required
-                autoComplete="current-password" // Added for better browser compatibility
               />
               <span
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 cursor-pointer text-gray-500 hover:text-gray-700 z-20"
+                onClick={togglePasswordVisibility}
+                className="absolute right-3 cursor-pointer text-gray-500 hover:text-gray-700"
               >
-                {showPassword ? <FaRegEyeSlash size={20} /> : <IoEyeOutline size={20} />}
+                {showPassword ? (
+                  <FaRegEyeSlash size={20} />
+                ) : (
+                  <IoEyeOutline size={20} />
+                )}
               </span>
             </div>
 
@@ -171,7 +197,7 @@ const Login = () => {
               className="mt-8 w-full h-12 rounded-full text-white font-semibold bg-indigo-500 hover:bg-indigo-600 transition-colors flex items-center justify-center"
               disabled={loading}
             >
-              {(loading || isLoading)
+              {loading || isLoading
                 ? "Please wait..."
                 : mode === "login"
                 ? "Login"
@@ -180,10 +206,14 @@ const Login = () => {
 
             {/* Switch mode link */}
             <p className="text-gray-500/90 text-sm mt-6">
-              {mode === "login" ? "Don't have an account? " : "Already have an account? "}
+              {mode === "login"
+                ? "Don't have an account? "
+                : "Already have an account? "}
               <span
                 className="text-indigo-500 font-semibold hover:underline cursor-pointer"
-                onClick={() => setMode(mode === "login" ? "signup" : "login")}
+                onClick={() =>
+                  setMode(mode === "login" ? "signup" : "login")
+                }
               >
                 {mode === "login" ? "Sign up" : "Login"}
               </span>
