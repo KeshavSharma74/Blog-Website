@@ -144,7 +144,7 @@ const Login = () => {
             </div>
 
             {/* Remember Me & Forgot Password only for login */}
-            {mode === "login" && (
+            {/* {mode === "login" && (
               <div className="w-full flex items-center justify-between mt-6 text-gray-600">
                 <div className="flex items-center gap-2">
                   <input
@@ -160,7 +160,7 @@ const Login = () => {
                   Forgot password?
                 </span>
               </div>
-            )}
+            )} */}
 
             {/* Submit Button */}
             <button
