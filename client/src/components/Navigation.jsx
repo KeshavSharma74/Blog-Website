@@ -221,11 +221,11 @@ const Navigation = ({ scrollToSection, refs }) => {
                   {/* Admin Button - Only visible for admin users */}
                   {user.role === 'admin' && (
                     <Link
-                      to="/blog"
+                      to="/create-blog"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className="text-white rounded-lg px-4 py-1 bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700 hover:cursor-pointer transition-all duration-300 shadow-lg font-medium"
                     >
-                      Admin Panel
+                      Create Blog
                     </Link>
                   )}
                   <button

@@ -135,11 +135,14 @@ const ShowSpecificBlog = () => {
           </div>
         </div>
       </div>
-
+            
       {/* Main Content and Sidebar Section */}
       <div className="w-full max-w-[1300px] mx-auto px-4 mt-12 pb-12 grid grid-cols-1 lg:grid-cols-3 lg:gap-12">
+        
         {/* Left Column: Post Content */}
         <main className="lg:col-span-2">
+                 <TableOfContents               htmlContent={post.contentHTML} 
+              onContentUpdate={setProcessedHtml}></TableOfContents> 
           {processedHtml ? (
             <div
               className="prose prose-lg prose-blue max-w-none dark:prose-invert"
@@ -154,13 +157,7 @@ const ShowSpecificBlog = () => {
         
         {/* Right Column: Sidebar */}
         <aside className="mt-12 lg:mt-0">
-          <div className="lg:sticky lg:top-24 space-y-6">
-            {/* Table of Contents */}
-            <TableOfContents 
-              htmlContent={post.contentHTML} 
-              onContentUpdate={setProcessedHtml}
-            />
-            
+          <div className="lg:sticky lg:top-24 space-y-6">   
             {/* Similar Blogs */}
             <SimilarBlogs currentPostSlug={post.slug} />
             

@@ -66,7 +66,7 @@ const TableOfContents = ({ htmlContent, onContentUpdate }) => {
   }
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6">
+    <div className="bg-white border mb-10 border-gray-200 rounded-lg p-6">
       <div 
         className="flex justify-between items-center cursor-pointer mb-4"
         onClick={() => setIsOpen(!isOpen)}
@@ -87,7 +87,7 @@ const TableOfContents = ({ htmlContent, onContentUpdate }) => {
             <button
               key={index}
               onClick={() => scrollToHeading(heading.id)}
-              className={`py-3 text-left text-gray-800 hover:text-blue-600 transition-colors duration-200 ${
+              className={`py-3 text-left text-gray-800 hover:cursor-pointer hover:text-blue-600 transition-colors duration-200 ${
                 heading.level === 'h3' ? 'pl-4' : ''
               }`}
             >

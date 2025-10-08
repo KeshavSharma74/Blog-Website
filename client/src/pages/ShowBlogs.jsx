@@ -9,7 +9,7 @@ const ShowBlogs = () => {
   const dispatch = useDispatch()
   const { allPosts, isFetchingAll, error } = useSelector((state) => state.post)
 
-  console.log('ShowBlogs: allPosts:', allPosts)
+  // console.log('ShowBlogs: allPosts:', allPosts)
 
   const [selectedCategory, setSelectedCategory] = useState('All')
 
@@ -93,17 +93,17 @@ const ShowBlogs = () => {
           {/* Category Buttons */}
           <div className="flex flex-wrap justify-center gap-3">
             {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-xl border transition-all duration-200 ${
-                  selectedCategory === category
-                    ? 'bg-blue-600 text-white border-blue-600'
-                    : 'bg-white text-gray-700 border-gray-300 hover:bg-blue-50'
-                }`}
-              >
-                {category}
-              </button>
+                <button
+                  key={category}
+                  onClick={() => setSelectedCategory(category)}
+                  className={`px-4 py-2 rounded-xl transition-all hover:cursor-pointer duration-200 font-medium ${
+                    selectedCategory === category
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md  hover:from-blue-600 hover:to-purple-700'
+                      : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
+                  }`}
+                >
+                  {category}
+                </button>
             ))}
           </div>
         </div>
