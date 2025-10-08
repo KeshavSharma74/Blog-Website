@@ -37,9 +37,13 @@ const Footer = () => {
             {/* Brand Section */}
             <div className="lg:col-span-1">
               <div className="flex items-center mb-6">
-                <div className="w-10 h-10 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg flex items-center justify-center mr-3">
-                  <span className="text-white font-bold text-lg">K</span>
-                </div>
+                {/* === MODIFIED SECTION START === */}
+                <img 
+                  src="/newFevicon.png" 
+                  alt="Kloudshark logo" 
+                  className="w-9 h-9 mr-1"
+                />
+                {/* === MODIFIED SECTION END === */}
                 <h2 className="text-2xl font-bold text-white">KLOUDSHARK</h2>
               </div>
               <p className="text-gray-400 mb-6 leading-relaxed">
