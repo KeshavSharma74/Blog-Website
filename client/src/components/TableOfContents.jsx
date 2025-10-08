@@ -42,7 +42,8 @@ const TableOfContents = ({ htmlContent, onContentUpdate }) => {
     const timer = setTimeout(() => {
       const actualHeadings = document.querySelectorAll('h2[id], h3[id]');
       actualHeadings.forEach((heading) => {
-        heading.style.scrollMarginTop = '120px'; // Offset for fixed header
+        heading.style.scrollMarginTop = '100px'; // Offset for fixed header
+        heading.style.scrollPaddingTop = '100px'; // Additional padding for better positioning
       });
     }, 100);
 
@@ -52,11 +53,19 @@ const TableOfContents = ({ htmlContent, onContentUpdate }) => {
   const scrollToHeading = (id) => {
     const element = document.getElementById(id);
     if (element) {
-      // Use scrollIntoView for better browser compatibility
-      element.scrollIntoView({ 
-        behavior: 'smooth', 
-        block: 'start',
-        inline: 'nearest'
+      // Get the element's position relative to the document
+      const elementTop = element.getBoundingClientRect().top + window.pageYOffset;
+      
+      // Account for fixed navigation bar (approximately 80px height + some padding)
+      const offset = 100;
+      
+      // Calculate the target scroll position
+      const targetPosition = elementTop - offset;
+      
+      // Smooth scroll to the calculated position
+      window.scrollTo({
+        top: targetPosition,
+        behavior: 'smooth'
       });
     }
   };
