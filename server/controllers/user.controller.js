@@ -17,11 +17,12 @@ const generateToken = (userId, res) => {
         });
     }
 
-    res.cookie("jwt", token, {
-        httpOnly: true,
-        secure: true,
-        maxAge: 7 * 24 * 60 * 60 * 1000,
-    });
+  res.cookie("jwt", token, {
+      httpOnly: true,
+      secure: true,            // ensures cookie only sent over HTTPS
+      sameSite: "none",        // REQUIRED for cross-site cookies (frontend+backend on different domains)
+      maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
 };
 
 const register = async (req, res) => {
