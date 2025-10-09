@@ -56,7 +56,7 @@ const FAQ = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
               Answers & Insights: Your Questions, Addressed
             </h1>
-            <p className="text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed">
+            <p className="text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed">
               Find clear, concise answers to the most common questions about Kloudshark. We've compiled this list to help you navigate our content and community with ease.
             </p>
             {/* Avatars + Rating Section */}

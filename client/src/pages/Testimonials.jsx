@@ -65,7 +65,7 @@ const Testimonials = () => {
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold leading-tight">
               Hear What Our Global Community Is Saying
             </h1>
-            <p className="text-gray-500 text-sm sm:text-base lg:text-lg leading-relaxed">
+            <p className="text-gray-400 text-sm sm:text-base lg:text-lg leading-relaxed">
               Dive into the experiences of our valued readers and discover how Kloudshark's curated
               content empowers them in their learning journeys and professional growth every day.
             </p>
