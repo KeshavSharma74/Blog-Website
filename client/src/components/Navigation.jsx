@@ -98,7 +98,7 @@ const Navigation = () => {
                     toast.error('Logout failed');
                   }
                 }}
-                className="text-white rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+                className="text-white hover:cursor-pointer rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
               >
                 Logout
               </button>
