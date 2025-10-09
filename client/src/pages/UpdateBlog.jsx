@@ -43,14 +43,41 @@ const UpdateBlog = () => {
       setDescription(currentPost.description || '')
       setSelectedCategories(currentPost.category || [])
       
-      // Set editor content after a short delay to ensure editor is ready
-      if (editorRef.current && currentPost.content) {
-        setTimeout(() => {
-          editorRef.current.commands.setContent(currentPost.content)
-        }, 100)
+      // Set editor content with better timing and error handling
+      if (currentPost.content) {
+        const setEditorContent = () => {
+          if (editorRef.current && editorRef.current.commands) {
+            try {
+              console.log('Setting editor content:', currentPost.content)
+              editorRef.current.commands.setContent(currentPost.content)
+            } catch (error) {
+              console.error('Error setting editor content:', error)
+            }
+          } else {
+            // If editor is not ready, try again after a short delay
+            setTimeout(setEditorContent, 200)
+          }
+        }
+        
+        // Try to set content immediately, then with delays if needed
+        setEditorContent()
+        setTimeout(setEditorContent, 100)
+        setTimeout(setEditorContent, 500)
       }
     }
   }, [currentPost])
+
+  // Additional effect to set content when editor becomes available
+  useEffect(() => {
+    if (editorRef.current && currentPost?.content) {
+      console.log('Editor is ready, setting content:', currentPost.content)
+      try {
+        editorRef.current.commands.setContent(currentPost.content)
+      } catch (error) {
+        console.error('Error setting editor content in secondary effect:', error)
+      }
+    }
+  }, [editorRef.current, currentPost?.content])
 
   const toggleCategory = (category) => {
     setSelectedCategories((prev) =>
@@ -291,7 +318,11 @@ const UpdateBlog = () => {
                 <p className="text-sm text-slate-600 mt-1">Write your blog post content below</p>
               </div>
               <div className="w-full">
-                <SimpleEditor handleSave={handleSave} editorRef={editorRef} />
+                <SimpleEditor 
+                  handleSave={handleSave} 
+                  editorRef={editorRef} 
+                  initialContent={currentPost?.content}
+                />
               </div>
             </div>
 

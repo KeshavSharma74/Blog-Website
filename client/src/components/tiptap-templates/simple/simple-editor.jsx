@@ -151,7 +151,7 @@ const MobileToolbarContent = ({ type, onBack }) => (
   </>
 )
 
-export function SimpleEditor({ handleSave, editorRef }) {
+export function SimpleEditor({ handleSave, editorRef, initialContent }) {
   const isMobile = useIsMobile()
   const { height } = useWindowSize()
   const [mobileView, setMobileView] = React.useState("main")
@@ -195,7 +195,7 @@ export function SimpleEditor({ handleSave, editorRef }) {
         onError: (error) => console.error("Upload failed:", error),
       }),
     ],
-    content: "<p></p>", // Empty paragraph
+    content: initialContent || "<p></p>", // Use initial content if provided
   })
 
   const rect = useCursorVisibility({
