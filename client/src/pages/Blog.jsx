@@ -89,12 +89,12 @@ const Blog = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className=" sm:text-md lg:text-md xl:text-2xl font-bold text-slate-900">Create New Blog Post</h1>
-              <p className="text-sm text-slate-600 mt-1">Share your thoughts with the world</p>
+              <h1 className="text-sm sm:text-md lg:text-lg md:xl xl:text-2xl font-bold text-slate-900">Create New Blog Post</h1>
+              <p className="text-[0.75rem] sm:text-[0.85rem] lg:text-[0.9rem] md:text-[0.9rem]  text-slate-600 mt-1">Share your thoughts with the world</p>
             </div>
             <button
               onClick={() => navigate('/')}
-              className="px-4 py-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors"
+              className="px-4 py-2 text-[0.75rem] sm:text-[0.85rem] lg:text-[0.9rem] font-semibold text-slate-600 hover:text-slate-900 transition-colors"
             >
               ← Back to Home
             </button>
