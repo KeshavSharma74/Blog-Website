@@ -15,7 +15,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 /* Base Prose Container */
 .prose {
   /* max-width: 65ch; */
-  color: #1f2937;
+  color: #000000;
   font-size: 1.125rem;
   line-height: 1.75;
 }
@@ -25,7 +25,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   font-size: 2.5rem;
   font-weight: 800;
   line-height: 1.2;
-  color: #111827;
+  color: #000000;
   margin-top: 0;
   margin-bottom: 2rem;
   letter-spacing: -0.025em;
@@ -35,7 +35,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   font-size: 2rem;
   font-weight: 700;
   line-height: 1.3;
-  color: #111827;
+  color: #000000;
   margin-top: 3rem;
   margin-bottom: 1.5rem;
   padding-bottom: 0.5rem;
@@ -47,7 +47,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   font-size: 1.5rem;
   font-weight: 600;
   line-height: 1.4;
-  color: #374151;
+  color: #000000;
   margin-top: 2.5rem;
   margin-bottom: 1rem;
 }
@@ -56,7 +56,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
   font-size: 1.25rem;
   font-weight: 600;
   line-height: 1.5;
-  color: #374151;
+  color: #000000;
   margin-top: 2rem;
   margin-bottom: 0.75rem;
 }
@@ -65,7 +65,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 .prose p {
   margin-top: 1.25rem;
   margin-bottom: 1.25rem;
-  color: #374151;
+  color: #000000;
 }
 
 .prose p:first-child {
@@ -89,12 +89,12 @@ input[type="password"]::-webkit-textfield-decoration-container {
 /* Strong & Emphasis */
 .prose strong {
   font-weight: 700;
-  color: #111827;
+  color: #000000;
 }
 
 .prose em {
   font-style: italic;
-  color: #4b5563;
+  color: #000000;
 }
 
 /* Strikethrough */
@@ -194,7 +194,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 .prose li {
   margin-top: 0.75rem;
   margin-bottom: 0.75rem;
-  color: #374151;
+  color: #000000;
   line-height: 1.7;
 }
 
@@ -311,8 +311,8 @@ input[type="password"]::-webkit-textfield-decoration-container {
   }
 }
 
-/* Dark Mode Support (Optional) */
-@media (prefers-color-scheme: dark) {
+/* Dark Mode Support (Optional) - Only apply on desktop with explicit dark mode preference */
+@media (prefers-color-scheme: dark) and (min-width: 1024px) {
   .prose {
     color: #e5e7eb;
   }
