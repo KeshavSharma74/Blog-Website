@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link } from 'react-router-dom';
-import { getPostBySlug } from '@/features/postSlice';
+import { getPostBySlug } from '@/features/postSlice'; // Assuming this is your Redux slice
 import SimilarBlogs from '../components/SimilarBlogs';
 import Navigation from '../components/Navigation';
-import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 import AllCategories from '../components/AllCategories';
 import TableOfContents from '../components/TableOfContents';
+import CodeBlockHandler from '../components/CodeBlockHandler';
+import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
 
 const ShowSpecificBlog = () => {
   const dispatch = useDispatch();
@@ -19,19 +20,21 @@ const ShowSpecificBlog = () => {
     window.scrollTo(0, 0);
   }, [slug]);
 
+  // Fetch post data when slug changes
   useEffect(() => {
     if (slug) {
       dispatch(getPostBySlug(slug));
     }
   }, [dispatch, slug]);
 
-  // Initialize processed HTML when post content changes
+  // Initialize processed HTML when post content is available
   useEffect(() => {
     if (currentPost?.contentHTML) {
       setProcessedHtml(currentPost.contentHTML);
     }
   }, [currentPost?.contentHTML]);
 
+  // Loading State
   if (isFetching) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -43,6 +46,7 @@ const ShowSpecificBlog = () => {
     );
   }
 
+  // Error or Not Found State
   if (error || !currentPost) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
@@ -56,6 +60,7 @@ const ShowSpecificBlog = () => {
 
   const post = currentPost;
 
+  // Function to transform YouTube links into embeds
   const transformYouTubeLinks = (html) => {
     if (!html) return '';
     const youtubeRegex = /(?:<a[^>]*>)?\s*(https?:\/\/(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+))\s*(?:<\/a>)?/g;
@@ -98,7 +103,7 @@ const ShowSpecificBlog = () => {
                 ))}
               </div>
             )}
-            <p className='text-[2.5rem] font-extrabold'>{post.title}</p>
+            <h1 className='text-[2.5rem] font-extrabold'>{post.title}</h1>
             <div className='mt-6 flex gap-5 items-center'>
               <div className='flex flex-col'>
                 <p className='text-gray-400 text-[1rem]'>Updated</p>
@@ -113,9 +118,7 @@ const ShowSpecificBlog = () => {
               <span className='text-gray-400 text-[1.2rem]'>|</span>
               <div className="flex items-center gap-3">
                 <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-300">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth="1.5" stroke="white" className="h-5 w-5">
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                  </svg>
+                  {/* User Icon */}
                 </div>
                 <div>
                   <p className="text-sm text-gray-400 text-[1rem]">By</p>
@@ -141,13 +144,12 @@ const ShowSpecificBlog = () => {
         
         {/* Left Column: Post Content */}
         <main className="lg:col-span-2">
-                 <TableOfContents               htmlContent={post.contentHTML} 
-              onContentUpdate={setProcessedHtml}></TableOfContents> 
+          <TableOfContents 
+            htmlContent={post.contentHTML} 
+            onContentUpdate={setProcessedHtml}
+          />
           {processedHtml ? (
-            <div
-              className="prose prose-lg prose-blue max-w-none dark:prose-invert"
-              dangerouslySetInnerHTML={{ __html: transformYouTubeLinks(processedHtml) }}
-            />
+            <CodeBlockHandler htmlContent={transformYouTubeLinks(processedHtml)} />
           ) : (
             <pre className="bg-gray-100 p-4 rounded text-sm overflow-auto">
               {JSON.stringify(post.content, null, 2)}
@@ -157,11 +159,8 @@ const ShowSpecificBlog = () => {
         
         {/* Right Column: Sidebar */}
         <aside className="mt-12 lg:mt-0">
-          <div className="lg:sticky lg:top-24 space-y-6">   
-            {/* Similar Blogs */}
+          <div className="lg:sticky lg:top-24 space-y-6">
             <SimilarBlogs currentPostSlug={post.slug} />
-            
-            {/* All Categories */}
             <AllCategories />
           </div>
         </aside>

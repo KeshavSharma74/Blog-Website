@@ -89,7 +89,7 @@ const Blog = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-2xl font-bold text-slate-900">Create New Blog Post</h1>
+              <h1 className=" sm:text-md lg:text-md xl:text-2xl font-bold text-slate-900">Create New Blog Post</h1>
               <p className="text-sm text-slate-600 mt-1">Share your thoughts with the world</p>
             </div>
             <button
