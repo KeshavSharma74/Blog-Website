@@ -98,7 +98,7 @@ const Navigation = () => {
                     toast.error('Logout failed');
                   }
                 }}
-                className="text-white hover:cursor-pointer rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+                className="text-white hover:cursor-pointer rounded-lg px-4 py-1  bg-blue-500  transition-all duration-300 shadow-lg"
               >
                 Logout
               </button>
@@ -106,7 +106,7 @@ const Navigation = () => {
           ) : (
             <Link
               to="/login"
-              className="text-white rounded-lg px-4 py-1 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+              className="text-white rounded-lg px-4 py-1 bg-blue-500  transition-all duration-300 shadow-lg"
             >
               Login
             </Link>
@@ -204,7 +204,7 @@ const Navigation = () => {
                           toast.error('Logout failed');
                         }
                       }}
-                      className="w-full text-white rounded-lg px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg font-medium"
+                      className="w-full text-white rounded-lg px-4 py-3 bg-blue-500  transition-all duration-300 shadow-lg font-medium"
                     >
                       Logout
                     </button>
@@ -213,7 +213,7 @@ const Navigation = () => {
                   <Link
                     to="/login"
                     onClick={closeMenu}
-                    className="block w-full text-center text-white rounded-lg px-4 py-3 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg font-medium"
+                    className="block w-full text-center text-white rounded-lg px-4 py-3 bg-blue-500  transition-all duration-300 shadow-lg font-medium"
                   >
                     Login
                   </Link>

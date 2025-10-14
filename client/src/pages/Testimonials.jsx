@@ -159,7 +159,7 @@ const Testimonials = () => {
             <h2 className="text-4xl md:text-[46px] md:leading-[60px] font-semibold max-w-2xl mt-5 bg-gradient-to-r from-blue-600 to-purple-600 text-transparent bg-clip-text">
                 Ready to Start Your Learning Journey?
             </h2>
-            <a href="/blog" className="px-8 py-3 bg-blue-600 text-white font-semibold rounded-full hover:bg-blue-700 transition-colors duration-200 mt-8">
+            <a href="/blog" className="px-8 py-3 bg-blue-500  text-white font-semibold rounded-full hover:bg-blue-600 transition-colors duration-200 mt-8">
                 Explore Our Blog
             </a>
           </div>

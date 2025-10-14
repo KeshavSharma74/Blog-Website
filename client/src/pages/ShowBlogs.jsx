@@ -98,7 +98,7 @@ const ShowBlogs = () => {
                   onClick={() => setSelectedCategory(category)}
                   className={`px-4 py-2 rounded-xl transition-all hover:cursor-pointer duration-200 font-medium ${
                     selectedCategory === category
-                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-md  hover:from-blue-600 hover:to-purple-700'
+                      ? ' text-white shadow-md  bg-blue-500 '
                       : 'bg-white text-gray-700 border border-gray-300 hover:bg-gray-100'
                   }`}
                 >

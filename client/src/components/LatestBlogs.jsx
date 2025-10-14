@@ -73,7 +73,7 @@ const LatestBlogs = () => {
         {/* Optional: View All Blogs Button */}
         <div className="text-center mt-12">
           {/* You might want a button here to link to your /blogs page */}
-          <Link to='/blog' className="px-6 py-3  text-white font-medium rounded-lg bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg">
+          <Link to='/blog' className="px-6 py-3  text-white font-medium rounded-lg bg-blue-500  transition-all duration-300 shadow-lg">
             View All Posts
           </Link>
         </div>

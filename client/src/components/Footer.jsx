@@ -79,31 +79,31 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li>
                   <Link to="/" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-blue-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     Home
                   </Link>
                 </li>
                 <li>
                   <Link to="/about" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-blue-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     About Us
                   </Link>
                 </li>
                 <li>
                   <Link to="/blog" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-blue-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     All Blogs
                   </Link>
                 </li>
                 <li>
                   <Link to="/testimonials" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-blue-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     Testimonials
                   </Link>
                 </li>
                 <li>
                   <Link to="/faq" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-blue-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     FAQ
                   </Link>
                 </li>
@@ -116,31 +116,31 @@ const Footer = () => {
               <ul className="space-y-4">
                 <li>
                   <Link to="/category/AI" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-purple-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     AI & Machine Learning
                   </Link>
                 </li>
                 <li>
                   <Link to="/category/Computer" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-purple-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     Computer Science
                   </Link>
                 </li>
                 <li>
                   <Link to="/category/Tech" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-purple-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     Technology
                   </Link>
                 </li>
                 <li>
                   <Link to="/category/Science" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-purple-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     Science
                   </Link>
                 </li>
                 <li>
                   <Link to="/category/Other" className="text-gray-400 hover:text-white transition-colors duration-200 flex items-center group">
-                    <span className="w-1 h-1 bg-purple-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                    <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                     Other Topics
                   </Link>
                 </li>
@@ -156,25 +156,25 @@ const Footer = () => {
                   <ul className="space-y-2 text-sm text-gray-400">
                     <li>
                       <Link to="/blog" className="hover:text-white transition-colors duration-200 flex items-center group">
-                        <span className="w-1 h-1 bg-green-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                        <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                         Latest Articles
                       </Link>
                     </li>
                     <li>
                       <Link to="/category/AI" className="hover:text-white transition-colors duration-200 flex items-center group">
-                        <span className="w-1 h-1 bg-green-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                        <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                         AI & Machine Learning
                       </Link>
                     </li>
                     <li>
                       <Link to="/category/Tech" className="hover:text-white transition-colors duration-200 flex items-center group">
-                        <span className="w-1 h-1 bg-green-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                        <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                         Tech Trends
                       </Link>
                     </li>
                     <li>
                       <Link to="/testimonials" className="hover:text-white transition-colors duration-200 flex items-center group">
-                        <span className="w-1 h-1 bg-green-400 rounded-full mr-3 group-hover:bg-white transition-colors"></span>
+                        <span className="w-1 h-1 bg-blue-500  rounded-full mr-3 group-hover:bg-white transition-colors"></span>
                         Reader Stories
                       </Link>
                     </li>
@@ -236,7 +236,7 @@ const Footer = () => {
             <button
               onClick={scrollToTop}
               aria-label="Back to top"
-              className="bg-gradient-to-r from-blue-600 to-purple-600 p-3 rounded-full hover:from-blue-700 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+              className="bg-blue-500  p-3 rounded-full transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
             >
               <UpArrowIcon />
             </button>

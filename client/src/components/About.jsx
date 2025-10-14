@@ -53,7 +53,7 @@ const About = () => {
           <div className="mt-6">
             <Link
               to="/blog"
-              className="flex w-full sm:w-[210px] items-center justify-center text-white rounded-lg px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 transition-all duration-300 shadow-lg"
+              className="flex w-full sm:w-[210px] items-center justify-center text-white rounded-lg px-4 py-2 bg-blue-500  transition-all duration-300 shadow-lg"
             >
               Explore Articles
               <svg

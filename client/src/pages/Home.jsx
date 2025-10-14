@@ -65,8 +65,8 @@ const Home = () => {
       {/* CHANGED: Wrapped Hero in a div with the new ref */}
       <div ref={heroRef}><Hero /></div>
       <div ref={aboutRef}><About /></div>
-      <div ref={testimonialRef}><Testimonial /></div>
-      <div ref={faqRef}><FAQSection /></div>
+      {/* <div ref={testimonialRef}><Testimonial /></div> */}
+      {/* <div ref={faqRef}><FAQSection /></div> */}
       <div ref={latestBlogsRef}><LatestBlogs /></div>
     </div>
   );
