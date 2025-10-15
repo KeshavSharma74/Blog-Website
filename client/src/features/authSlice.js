@@ -61,6 +61,19 @@ export const logout = createAsyncThunk(
   }
 );
 
+// Admin OTP verification
+export const verifyAdminLogin = createAsyncThunk(
+  "auth/verifyAdminLogin",
+  async (otp, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`${API_URL}/api/user/verify-admin-login`, { otp });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "OTP verification failed");
+    }
+  }
+);
+
 // ---------- New thunks for forgot-password flow ----------
 
 // Sends OTP to the provided email (route: POST /api/user/reset-otp)
@@ -169,6 +182,18 @@ const authSlice = createSlice({
       .addCase(login.rejected, (state) => {
         state.isLoading = false;
         state.user = null;
+      })
+
+      // verifyAdminLogin
+      .addCase(verifyAdminLogin.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(verifyAdminLogin.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload.user;
+      })
+      .addCase(verifyAdminLogin.rejected, (state) => {
+        state.isLoading = false;
       });
   },
 });

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import toast from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
-import { login, signupUser } from "@/features/authSlice";
+import { login, signupUser, verifyAdminLogin } from "@/features/authSlice";
 import { useNavigate } from "react-router-dom";
 import Navigation from "./Navigation";
 
@@ -13,6 +13,8 @@ const Login = () => {
     password: "",
   });
   const [loading, setLoading] = useState(false);
+  const [showOtpVerification, setShowOtpVerification] = useState(false);
+  const [otp, setOtp] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -51,8 +53,14 @@ const Login = () => {
             : "Something went wrong!");
 
         if (success) {
-          toast.success(message);
-          navigate("/");
+          // Check if this is an admin OTP verification response
+          if (data.message && data.message.includes("OTP sent to admin email")) {
+            toast.success(message);
+            setShowOtpVerification(true);
+          } else {
+            toast.success(message);
+            navigate("/");
+          }
         } else {
           toast.error(message);
         }
@@ -62,6 +70,34 @@ const Login = () => {
       ) {
         const message =
           action.payload || action.error?.message || "Something went wrong!";
+        toast.error(message);
+      }
+    } catch (error) {
+      toast.error("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleOtpVerification = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const action = await dispatch(verifyAdminLogin(otp));
+      
+      if (verifyAdminLogin.fulfilled.match(action)) {
+        const data = action.payload;
+        const success = Boolean(data?.success);
+        const message = data?.message || "OTP verification successful!";
+
+        if (success) {
+          toast.success(message);
+          navigate("/");
+        } else {
+          toast.error(message);
+        }
+      } else if (verifyAdminLogin.rejected.match(action)) {
+        const message = action.payload || action.error?.message || "OTP verification failed!";
         toast.error(message);
       }
     } catch (error) {
@@ -87,18 +123,19 @@ const Login = () => {
 
         {/* Form */}
         <div className="w-full md:w-1/2 flex flex-col items-center justify-center p-8 md:p-12">
-          <form
-            className="w-full max-w-md flex flex-col items-center justify-center"
-            onSubmit={handleSubmit}
-          >
-            <h2 className="text-3xl font-bold text-gray-900 self-start">
-              {mode === "login" ? "Sign in" : "Sign up"}
-            </h2>
-            <p className="text-sm text-gray-500/90 mt-2 self-start">
-              {mode === "login"
-                ? "Welcome back! Please sign in to continue"
-                : "Create your account to get started"}
-            </p>
+          {!showOtpVerification ? (
+            <form
+              className="w-full max-w-md flex flex-col items-center justify-center"
+              onSubmit={handleSubmit}
+            >
+              <h2 className="text-3xl font-bold text-gray-900 self-start">
+                {mode === "login" ? "Sign in" : "Sign up"}
+              </h2>
+              <p className="text-sm text-gray-500/90 mt-2 self-start">
+                {mode === "login"
+                  ? "Welcome back! Please sign in to continue"
+                  : "Create your account to get started"}
+              </p>
 
             {/* Name input only for signup */}
             {mode === "signup" && (
@@ -175,21 +212,69 @@ const Login = () => {
                 : "Sign Up"}
             </button>
 
-            {/* Switch mode link */}
-            <p className="text-gray-500/90 text-sm mt-6">
-              {mode === "login"
-                ? "Don't have an account? "
-                : "Already have an account? "}
-              <span
-                className="text-indigo-500 font-semibold hover:underline cursor-pointer"
-                onClick={() =>
-                  setMode(mode === "login" ? "signup" : "login")
-                }
+              {/* Switch mode link */}
+              <p className="text-gray-500/90 text-sm mt-6">
+                {mode === "login"
+                  ? "Don't have an account? "
+                  : "Already have an account? "}
+                <span
+                  className="text-indigo-500 font-semibold hover:underline cursor-pointer"
+                  onClick={() =>
+                    setMode(mode === "login" ? "signup" : "login")
+                  }
+                >
+                  {mode === "login" ? "Sign up" : "Login"}
+                </span>
+              </p>
+            </form>
+          ) : (
+            <form
+              className="w-full max-w-md flex flex-col items-center justify-center"
+              onSubmit={handleOtpVerification}
+            >
+              <h2 className="text-3xl font-bold text-gray-900 self-start">
+                Verify OTP
+              </h2>
+              <p className="text-sm text-gray-500/90 mt-2 self-start">
+                Please enter the OTP sent to your email address
+              </p>
+
+              {/* OTP Input */}
+              <div className="flex items-center mt-4 w-full border border-gray-300/60 h-12 rounded-full px-4 gap-3 focus-within:border-indigo-500">
+                <input
+                  type="text"
+                  value={otp}
+                  onChange={(e) => setOtp(e.target.value)}
+                  placeholder="Enter OTP"
+                  className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full"
+                  required
+                  maxLength="6"
+                />
+              </div>
+
+              {/* Verify Button */}
+              <button
+                type="submit"
+                className="mt-8 w-full h-12 rounded-full text-white font-semibold bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 flex items-center justify-center"
+                disabled={loading}
               >
-                {mode === "login" ? "Sign up" : "Login"}
-              </span>
-            </p>
-          </form>
+                {loading || isLoading ? "Verifying..." : "Verify OTP"}
+              </button>
+
+              {/* Back to login link */}
+              <p className="text-gray-500/90 text-sm mt-6">
+                <span
+                  className="text-indigo-500 font-semibold hover:underline cursor-pointer"
+                  onClick={() => {
+                    setShowOtpVerification(false);
+                    setOtp("");
+                  }}
+                >
+                  Back to Login
+                </span>
+              </p>
+            </form>
+          )}
         </div>
       </div>
     </div>

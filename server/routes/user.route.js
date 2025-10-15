@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { checkAuth, getAllPosts, login, logout, register, uploadProfileImage } from "../controllers/user.controller.js";
+import { checkAuth, getAllPosts, login, logout, register, uploadProfileImage,verifyAdminLogin } from "../controllers/user.controller.js";
 import upload from "../middlewares/multer.js";
 import { protect } from "../middlewares/user.middlware.js";
 
@@ -11,5 +11,6 @@ userRouter.patch('/update-profile', protect, upload.single('image'), uploadProfi
 userRouter.get('/get-all-post',getAllPosts);
 userRouter.get('/check-auth',protect,checkAuth);
 userRouter.post('/logout',logout);
+userRouter.post('/verify-admin-login', verifyAdminLogin);
 
 export default userRouter;
