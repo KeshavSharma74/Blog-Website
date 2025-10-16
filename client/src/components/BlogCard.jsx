@@ -43,7 +43,7 @@ const BlogCard = ({ post }) => {
   const isAdmin = user && user.role === 'admin'
 
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 relative">
+    <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow-sm  relative">
       {/* Admin Action Buttons */}
       {isAdmin && (
         <div className="absolute top-3 right-3 z-10 flex gap-2">
@@ -84,17 +84,17 @@ const BlogCard = ({ post }) => {
         {/* Content - PADDING REDUCED */}
         <div className="p-4">
           {/* Title */}
-          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white line-clamp-2">
+          <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900  line-clamp-2">
             {post.title}
           </h5>
 
         {/* Subtitle */}
-        <p className="mb-3 font-normal text-gray-700 dark:text-gray-400 line-clamp-3">
+        <p className="mb-3 font-normal text-gray-700  line-clamp-3">
           {post.subTitle}
         </p>
 
         {/* Date */}
-        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 mb-3">
+        <div className="flex items-center text-sm text-gray-500  mb-3">
           <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
           </svg>
@@ -107,7 +107,7 @@ const BlogCard = ({ post }) => {
             {post.category.map((cat, index) => (
               <span
                 key={index}
-                className="inline-block bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300 text-xs px-2 py-1 rounded-full"
+                className="inline-block bg-blue-100 text-blue-800  text-xs px-2 py-1 rounded-full"
               >
                 {cat}
               </span>
