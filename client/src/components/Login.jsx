@@ -14,18 +14,60 @@ const Login = () => {
   });
   const [loading, setLoading] = useState(false);
   const [showOtpVerification, setShowOtpVerification] = useState(false);
-  const [otp, setOtp] = useState("");
+  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { isLoading } = useSelector((state) => state.auth);
   const passwordRef = useRef(null);
+  const otpRefs = useRef([]);
 
   const handleChange = (e) => {
     setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
+  };
+
+  const handleOtpChange = (index, value) => {
+    if (value.length > 1) {
+      value = value.slice(0, 1);
+    }
+
+    if (!/^\d*$/.test(value)) {
+      return;
+    }
+
+    const newOtp = [...otp];
+    newOtp[index] = value;
+    setOtp(newOtp);
+
+    if (value !== "" && index < 5) {
+      otpRefs.current[index + 1]?.focus();
+    }
+  };
+
+  const handleOtpKeyDown = (index, e) => {
+    if (e.key === "Backspace" && otp[index] === "" && index > 0) {
+      otpRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handleOtpPaste = (e) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData.getData("text").slice(0, 6);
+    if (!/^\d+$/.test(pastedData)) {
+      return;
+    }
+
+    const newOtp = [...otp];
+    for (let i = 0; i < pastedData.length && i < 6; i++) {
+      newOtp[i] = pastedData[i];
+    }
+    setOtp(newOtp);
+
+    const nextIndex = Math.min(pastedData.length, 5);
+    otpRefs.current[nextIndex]?.focus();
   };
 
   const handleSubmit = async (e) => {
@@ -81,9 +123,15 @@ const Login = () => {
 
   const handleOtpVerification = async (e) => {
     e.preventDefault();
+    const otpString = otp.join("");
+    if (otpString.length !== 6) {
+      toast.error("Please enter all 6 digits");
+      return;
+    }
+    
     setLoading(true);
     try {
-      const action = await dispatch(verifyAdminLogin(otp));
+      const action = await dispatch(verifyAdminLogin(otpString));
       
       if (verifyAdminLogin.fulfilled.match(action)) {
         const data = action.payload;
@@ -236,20 +284,25 @@ const Login = () => {
                 Verify OTP
               </h2>
               <p className="text-sm text-gray-500/90 mt-2 self-start">
-                Please enter the OTP sent to your email address
+                Please enter the 6-digit code sent to your email address
               </p>
 
-              {/* OTP Input */}
-              <div className="flex items-center mt-4 w-full border border-gray-300/60 h-12 rounded-full px-4 gap-3 focus-within:border-indigo-500">
-                <input
-                  type="text"
-                  value={otp}
-                  onChange={(e) => setOtp(e.target.value)}
-                  placeholder="Enter OTP"
-                  className="bg-transparent text-gray-700 placeholder-gray-500/80 outline-none text-sm w-full h-full"
-                  required
-                  maxLength="6"
-                />
+              {/* OTP Input Boxes */}
+              <div className="flex gap-3 mt-8 w-full justify-center">
+                {otp.map((digit, index) => (
+                  <input
+                    key={index}
+                    ref={(el) => (otpRefs.current[index] = el)}
+                    type="text"
+                    inputMode="numeric"
+                    maxLength="1"
+                    value={digit}
+                    onChange={(e) => handleOtpChange(index, e.target.value)}
+                    onKeyDown={(e) => handleOtpKeyDown(index, e)}
+                    onPaste={index === 0 ? handleOtpPaste : undefined}
+                    className="w-12 h-14 text-center text-2xl font-semibold border-2 border-gray-300 rounded-lg focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 outline-none transition-all"
+                  />
+                ))}
               </div>
 
               {/* Verify Button */}
@@ -267,7 +320,7 @@ const Login = () => {
                   className="text-indigo-500 font-semibold hover:underline cursor-pointer"
                   onClick={() => {
                     setShowOtpVerification(false);
-                    setOtp("");
+                    setOtp(["", "", "", "", "", ""]);
                   }}
                 >
                   Back to Login
