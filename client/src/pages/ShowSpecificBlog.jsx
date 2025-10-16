@@ -8,6 +8,7 @@ import AllCategories from '../components/AllCategories';
 import TableOfContents from '../components/TableOfContents';
 import CodeBlockHandler from '../components/CodeBlockHandler';
 import { MdOutlineKeyboardArrowRight } from 'react-icons/md';
+import {FaUser} from 'react-icons/fa';
 
 const ShowSpecificBlog = () => {
   const dispatch = useDispatch();
@@ -117,9 +118,9 @@ const ShowSpecificBlog = () => {
               </div>
               <span className='text-gray-400 text-[1.2rem]'>|</span>
               <div className="flex items-center gap-3">
-                <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gray-300">
-                  {/* User Icon */}
-                </div>
+              <div className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full bg-slate-200 text-slate-600 transition-colors duration-300 hover:bg-slate-300">
+                <FaUser size={24} />
+              </div>
                 <div>
                   <p className="text-sm text-gray-400 text-[1rem]">By</p>
                   <p className="font-medium text-gray-800 text-[1.07rem]">{post.user.name}</p>

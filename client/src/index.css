@@ -312,7 +312,7 @@ input[type="password"]::-webkit-textfield-decoration-container {
 }
 
 /* Dark Mode Support (Optional) - Only apply on desktop with explicit dark mode preference */
-@media (prefers-color-scheme: dark) and (min-width: 1024px) {
+/* @media (prefers-color-scheme: dark) and (min-width: 1024px) {
   .prose {
     color: #e5e7eb;
   }
@@ -361,4 +361,4 @@ input[type="password"]::-webkit-textfield-decoration-container {
     color: #93c5fd;
     border-bottom-color: #3b82f6;
   }
-}
+} */
