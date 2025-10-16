@@ -36,6 +36,7 @@ const App = () => {
   return (
     <div className="w-full h-full ">
       <Toaster></Toaster>
+      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />

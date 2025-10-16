@@ -76,9 +76,9 @@ export const updatePost = async (req, res) => {
     if (!post) return res.status(404).json({ success: false, message: "Post not found" });
 
     // Check if the logged-in user is the owner
-    if (post.user.toString() !== userId.toString()) {
-      return res.status(403).json({ success: false, message: "Unauthorized" });
-    }
+    // if (post.user.toString() !== userId.toString()) {
+    //   return res.status(403).json({ success: false, message: "Unauthorized" });
+    // }
 
     // Update main image if new file is uploaded
     if (req.files && req.files['mainImage'] && req.files['mainImage'].length > 0) {

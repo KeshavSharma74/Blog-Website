@@ -86,7 +86,7 @@ const ShowSpecificBlog = () => {
       <Navigation />
       
       {/* Header Section */}
-      <div className="mt-[60px] py-8 w-full bg-[#e7eff8]">
+      <div className="mt-[60px]  py-8 w-full bg-[#e7eff8]">
         <div className='w-full max-w-[1300px] mx-auto px-4 flex flex-col md:flex-row justify-between'>
           {/* Left Column */}
           <div className='w-full md:w-[50%] flex flex-col gap-6'>
@@ -129,13 +129,15 @@ const ShowSpecificBlog = () => {
             </div>
           </div>
           {/* Right Column */}
-          <div className='w-full md:w-[43%] my-auto mt-6 md:mt-0'>
-            <img
-              src={post.mainImage}
-              alt={post.title}
-              className="w-full h-[90%] object-cover rounded-lg shadow-md"
-              onError={(e) => { e.target.src = 'https://via.placeholder.com/800x400?text=No+Image' }}
-            />
+          <div className='w-full md:w-[43%] my-auto mt-6 md:mt-0 flex items-center justify-center'>
+            <div className="w-full max-h-[400px] overflow-hidden rounded-lg shadow-md">
+              <img
+                src={post.mainImage}
+                alt={post.title}
+                className="w-full h-auto max-h-[400px] object-cover"
+                onError={(e) => { e.target.src = 'https://via.placeholder.com/800x400?text=No+Image' }}
+              />
+            </div>
           </div>
         </div>
       </div>

@@ -1,13 +1,139 @@
 import React, { useEffect, useRef } from 'react';
+import TableauVizComponent from './TableauVizComponent';
 
 const CodeBlockHandler = ({ htmlContent }) => {
   const contentRef = useRef(null);
 
+  // Function to detect and replace Tableau code blocks
+  const processTableauCodeBlocks = (html) => {
+    if (!html) return html;
+    
+    // Regex to match Tableau code blocks in pre/code tags
+    // This matches the pattern: <pre><code>&lt;TableauViz url="..." options={{...}} /&gt;</code></pre>
+    const tableauRegex = /<pre><code>.*?&lt;TableauViz[^&]*?url="([^"]*)"[^&]*?options=\{\{([^}]*?)\}\}[^&]*?\/&gt;.*?<\/code><\/pre>/gs;
+    
+    return html.replace(tableauRegex, (match, url, optionsStr) => {
+      try {
+        // Parse the options string
+        let options = {};
+        if (optionsStr) {
+          try {
+            // Handle the specific format from your example
+            // hideTabs: true, toolbar: "bottom", width: "100%", height: "100%"
+            const cleanOptionsStr = optionsStr
+              .replace(/hideTabs:\s*true/g, '"hideTabs": true')
+              .replace(/hideTabs:\s*false/g, '"hideTabs": false')
+              .replace(/toolbar:\s*"([^"]*)"/g, '"toolbar": "$1"')
+              .replace(/width:\s*"([^"]*)"/g, '"width": "$1"')
+              .replace(/height:\s*"([^"]*)"/g, '"height": "$1"')
+              .replace(/(\w+):/g, '"$1":')
+              .replace(/'/g, '"');
+            
+            options = JSON.parse(`{${cleanOptionsStr}}`);
+          } catch (e) {
+            console.warn('Could not parse Tableau options:', e);
+            // Fallback to default options
+            options = {
+              hideTabs: true,
+              toolbar: "bottom",
+              width: "100%",
+              height: "600px"
+            };
+          }
+        } else {
+          // Default options if no options string provided
+          options = {
+            hideTabs: true,
+            toolbar: "bottom",
+            width: "100%",
+            height: "600px"
+          };
+        }
+        
+        // Create a unique ID for this Tableau component
+        const tableauId = `tableau-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
+        
+        // Return a placeholder div that will be replaced by React
+        return `<div id="${tableauId}" data-tableau-url="${url}" data-tableau-options='${JSON.stringify(options)}'></div>`;
+      } catch (error) {
+        console.error('Error processing Tableau code block:', error);
+        return match; // Return original if parsing fails
+      }
+    });
+  };
+
+  // Function to render Tableau components
+  const renderTableauComponents = () => {
+    if (!contentRef.current) return;
+    
+    const tableauPlaceholders = contentRef.current.querySelectorAll('[id^="tableau-"]');
+    
+    tableauPlaceholders.forEach(placeholder => {
+      const url = placeholder.getAttribute('data-tableau-url');
+      const optionsStr = placeholder.getAttribute('data-tableau-options');
+      
+      if (url) {
+        try {
+          const options = optionsStr ? JSON.parse(optionsStr) : {};
+          
+          // Create a container for the Tableau component
+          const container = document.createElement('div');
+          container.className = 'tableau-container';
+          
+          // Replace the placeholder with the container
+          placeholder.parentNode.replaceChild(container, placeholder);
+          
+          // Create the Tableau viz element directly
+          const vizElement = document.createElement('tableau-viz');
+          vizElement.setAttribute('id', 'tableau-viz');
+          vizElement.setAttribute('src', url);
+          
+          // Set attributes based on options
+          if (options.hideTabs) {
+            vizElement.setAttribute('hide-tabs', '');
+          }
+          if (options.toolbar) {
+            vizElement.setAttribute('toolbar', options.toolbar);
+          }
+          if (options.width) {
+            vizElement.setAttribute('width', options.width);
+          }
+          if (options.height) {
+            vizElement.setAttribute('height', options.height);
+          }
+          
+          // Add styling wrapper
+          const wrapper = document.createElement('div');
+          wrapper.className = 'my-6 w-full';
+          wrapper.innerHTML = `
+            <div class="bg-white rounded-lg shadow-md p-4 border">
+              <div class="w-full"></div>
+            </div>
+          `;
+          
+          wrapper.querySelector('.w-full').appendChild(vizElement);
+          container.appendChild(wrapper);
+        } catch (error) {
+          console.error('Error rendering Tableau component:', error);
+        }
+      }
+    });
+  };
+
   useEffect(() => {
     if (!contentRef.current || !htmlContent) return;
 
+    // Process Tableau code blocks first
+    const processedHtml = processTableauCodeBlocks(htmlContent);
+    
+    // Update the content with processed HTML
+    contentRef.current.innerHTML = processedHtml;
+
     // A small delay can help ensure all DOM elements are ready.
     const timer = setTimeout(() => {
+      // Render Tableau components
+      renderTableauComponents();
+      
       const codeBlocks = contentRef.current.querySelectorAll('pre');
 
       codeBlocks.forEach((pre) => {
@@ -126,7 +252,6 @@ const CodeBlockHandler = ({ htmlContent }) => {
     <div
       ref={contentRef}
       className="prose prose-lg prose-blue max-w-none dark:prose-invert"
-      dangerouslySetInnerHTML={{ __html: htmlContent }}
     />
   );
 };
