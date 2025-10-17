@@ -215,10 +215,12 @@ const getAllPosts = async (req, res) => {
 
 const logout = (req, res) => {
     try {
-        res.cookie("jwt", "", {
-            httpOnly: true,
-            expires: new Date(0)
-        });
+            res.clearCookie("jwt", {
+                        httpOnly: true,
+                        secure: true, // Set to true if your app is on HTTPS
+                        sameSite: "none",
+                    });
+
         res.json({
             success: true,
             message: "User logged out successfully",
