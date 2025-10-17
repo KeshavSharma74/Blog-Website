@@ -50,7 +50,8 @@ const Navigation = () => {
     >
       <nav className="max-w-[1350px] mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link to="/" className="text-xl font-bold tracking-tight text-gray-700">
+        <Link to="/" className="text-xl font-bold tracking-tight flex justify-center items-center text-gray-700">
+          <img src="newFevicon.png" className='h-6' alt="" />
           KLOUDSHARK
         </Link>
 
