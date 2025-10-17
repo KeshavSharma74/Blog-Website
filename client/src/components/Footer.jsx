@@ -48,7 +48,7 @@ const Footer = () => {
                 <h2 className="text-2xl font-bold text-black">KLOUDSHARK</h2>
               </div>
               {/* Darkened paragraph text */}
-              <p className="text-gray-600 mb-6 leading-relaxed">
+              <p className="text-gray-600 mb-6 text-lg leading-relaxed">
                 Discover insights, share knowledge, and grow together. Your trusted source for quality content across technology, lifestyle, and beyond.
               </p>
               <div className="flex space-x-4">
@@ -105,7 +105,6 @@ const Footer = () => {
               <h3 className="text-lg font-semibold text-gray-900 mb-6">Resources</h3>
               <div className="space-y-6">
                 <div>
-                  <h4 className="text-gray-800 font-medium mb-3">Popular Content</h4>
                   <ul className="space-y-2 text-sm">
                     <li><Link to="/blog" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Latest Articles</Link></li>
                     <li><Link to="/category/AI" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>AI & Machine Learning</Link></li>
@@ -120,7 +119,7 @@ const Footer = () => {
                   <div className="space-y-3">
                     <div className="flex items-center text-gray-700 hover:text-black transition-colors duration-200 cursor-pointer">
                       <svg className="w-4 h-4 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                      <span className="text-sm">hello@kloudshark.com</span>
+                      <span className="text-sm">info@kloudshark.com</span>
                     </div>
                     <div className="flex items-center text-gray-700 hover:text-black transition-colors duration-200 cursor-pointer">
                       <svg className="w-4 h-4 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
