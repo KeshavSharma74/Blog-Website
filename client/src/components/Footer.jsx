@@ -80,11 +80,11 @@ const Footer = () => {
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-6">Quick Links</h3>
               <ul className="space-y-4">
-                <li><Link to="/" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Home</Link></li>
-                <li><Link to="/about" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>About Us</Link></li>
-                <li><Link to="/blog" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>All Blogs</Link></li>
-                <li><Link to="/testimonials" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Testimonials</Link></li>
-                <li><Link to="/faq" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>FAQ</Link></li>
+                <li><Link to="/" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Home</Link></li>
+                <li><Link to="/about" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>About Us</Link></li>
+                <li><Link to="/blog" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>All Blogs</Link></li>
+                <li><Link to="/testimonials" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Testimonials</Link></li>
+                <li><Link to="/faq" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>FAQ</Link></li>
               </ul>
             </div>
 
@@ -92,11 +92,11 @@ const Footer = () => {
             <div>
               <h3 className="text-lg font-semibold text-gray-900 mb-6">Categories</h3>
               <ul className="space-y-4">
-                <li><Link to="/category/AI" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>AI & Machine Learning</Link></li>
-                <li><Link to="/category/Computer" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Computer Science</Link></li>
-                <li><Link to="/category/Tech" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Technology</Link></li>
-                <li><Link to="/category/Science" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Science</Link></li>
-                <li><Link to="/category/Other" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Other Topics</Link></li>
+                <li><Link to="/category/AI" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>AI & Machine Learning</Link></li>
+                <li><Link to="/category/Computer" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Computer Science</Link></li>
+                <li><Link to="/category/Tech" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Technology</Link></li>
+                <li><Link to="/category/Science" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Science</Link></li>
+                <li><Link to="/category/Other" className="text-gray-700 text-lg hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Other Topics</Link></li>
               </ul>
             </div>
 
