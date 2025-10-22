@@ -35,13 +35,13 @@ const Footer = () => {
         {/* Main Footer Content */}
         <div className="py-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
-            
+
             {/* Brand Section */}
             <div className="lg:col-span-1">
               <div className="flex items-center mb-6">
-                <img 
-                  src="/newFevicon.png" 
-                  alt="Kloudshark logo" 
+                <img
+                  src="/newFevicon.png"
+                  alt="Kloudshark logo"
                   className="w-9 h-9 mr-1"
                 />
                 {/* Changed text to black */}
@@ -112,22 +112,33 @@ const Footer = () => {
                     <li><Link to="/testimonials" className="text-gray-700 hover:text-black transition-colors duration-200 flex items-center group"><span className="w-1 h-1 bg-blue-500 rounded-full mr-3 group-hover:bg-black transition-colors"></span>Reader Stories</Link></li>
                   </ul>
                 </div>
-                
+
                 {/* Changed border to a lighter gray */}
                 <div className="pt-4 border-t border-gray-300">
+
                   <h4 className="text-gray-800 font-medium mb-3">Connect With Us</h4>
                   <div className="space-y-3">
                     <div className="flex items-center text-gray-700 hover:text-black transition-colors duration-200 cursor-pointer">
                       <svg className="w-4 h-4 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                      <span className="text-sm">info@kloudshark.com</span>
+                      <a
+                        href="mailto:info@kloudshark.com">
+                        <span className="text-sm">info@kloudshark.com</span>
+                      </a>
                     </div>
                     <div className="flex items-center text-gray-700 hover:text-black transition-colors duration-200 cursor-pointer">
                       <svg className="w-4 h-4 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-                      <span className="text-sm">Join our community</span>
+                      <a
+                        href="mailto:info@kloudshark.com">
+                        <span className="text-sm">Join our community</span>
+                      </a>
                     </div>
                     <div className="flex items-center text-gray-700 hover:text-black transition-colors duration-200 cursor-pointer">
                       <svg className="w-4 h-4 mr-3 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                      <span className="text-sm">Help & Support</span>
+
+                      <a
+                        href="mailto:info@kloudshark.com">
+                        <span className="text-sm">Help & Support</span>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -148,9 +159,9 @@ const Footer = () => {
 
             {/* Legal Links */}
             <div className="flex flex-wrap items-center gap-6 text-sm">
-              <p className="text-gray-600 hover:text-black transition-colors duration-200 cursor-pointer">Privacy Policy</p>
-              <p className="text-gray-600 hover:text-black transition-colors duration-200 cursor-pointer">Terms of Service</p>
-              <p className="text-gray-600 hover:text-black transition-colors duration-200 cursor-pointer">Cookie Policy</p>
+              <Link to='/privacy' className="text-gray-600 hover:underline hover:text-black transition-colors duration-200 cursor-pointer">Privacy Policy</Link>
+              <Link to='/terms' className="text-gray-600 hover:underline hover:text-black transition-colors duration-200 cursor-pointer">Terms of Service</Link>
+              <Link to='/cookie' className="text-gray-600 hover:underline hover:text-black transition-colors duration-200 cursor-pointer">Cookie Policy</Link>
             </div>
 
             {/* Back to Top Button */}

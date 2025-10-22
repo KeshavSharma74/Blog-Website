@@ -15,6 +15,9 @@ import CategoryBlogs from './pages/CategoryBlogs'
 import About from './pages/About'
 import Testimonials from './pages/Testimonials'
 import FAQ from './pages/FAQ'
+import PrivacyAndPolicy from './pages/PrivacyAndPolicy'
+import TermsOfService from './pages/TermsOfService'
+import CookiePolicy from './pages/CookiePolicy'
 
 const App = () => {
   const dispatch = useDispatch()
@@ -48,6 +51,9 @@ const App = () => {
         <Route path="/blog" element={<ShowBlogs />} />
         <Route path="/blog/:slug" element={<ShowSpecificBlog />} />
         <Route path="/category/:categoryName" element={<CategoryBlogs />} />
+        <Route path="/privacy" element={<PrivacyAndPolicy />} />
+        <Route path="/terms" element={<TermsOfService />} />
+        <Route path="/cookie" element={<CookiePolicy />} />
       </Routes>
       <Footer></Footer>
     </div>
